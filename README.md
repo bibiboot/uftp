@@ -55,3 +55,51 @@ You should test your system under various different conditions. However
 two settings that you
 must expose your system for the assignment are:
 
+* The Delay (RTT) of 10ms with the Loss rate of 1%
+* The Delay (RTT) of 200ms with the Loss rate of 20%
+
+For your demo and competition, you will need to create an experiment
+with two nodes connected
+by the second link (delay of 200ms and the loss rate of 20%) in both
+direction defined in your .ns
+file.
+
+You will also need to create a 1GB file in your local /tmp directory of
+the sender computer.
+Your program will need to reliably transfer the entire file from the
+sender to the receiver then
+back to the sender at the highest performance possible; all through this
+bad network link.
+
+You must also create a script that will timestamp right before the
+execution of the program and
+timestamp at the end of the successful transference of the file. The
+total time for the file to make
+the round trip will be used to compare your program’s performance
+against other team’s program
+performance. You also will need to prove the reliability of your system
+by running MD5 on both
+the original file and the received file.
+
+The execution of the system should be straight forward and any notion of
+cheating will result in
+automatic defeat in the competition and possibly zero on the lab score.
+The goal of this task is to
+encourage a healthy competitive development environment for everyone.
+You are encouraged to
+help each other to get the best result. However, at the end, the faster
+team will win.
+
+* As a part of the assignment, each group must post the progress and
+the result of your system
+on the Laboratory 5 Results and Discussion forum EVERY SINGLE DAY.
+* The minimum transfer rate for your final FTP is 20 Mbps to compete
+against the other team.
+* Describe, in detail, the concept(s) behind your file transfer
+utility, results, and the analysis in
+the document that must be submitted on September 13 th by 11:55pm. You
+also must
+demonstrate your system to your T.A. during his office hour on Sept
+15th.
+* The scoring will be based on the submitted document and T.A.s
+verification of the system.
