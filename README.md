@@ -90,6 +90,10 @@ You are encouraged to
 help each other to get the best result. However, at the end, the faster
 team will win.
 
+
+Daily activities
+================
+
 * As a part of the assignment, each group must post the progress and
 the result of your system
 on the Laboratory 5 Results and Discussion forum EVERY SINGLE DAY.
