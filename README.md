@@ -3,23 +3,89 @@ uftp
 
 USC558L => Lab5 FTP
 
+## STYLEGUIDE
+
+### TODO: Please add / edit to the below code demonstration
+
+*All `//` comments in styleguide below are not actualy style specifications, just comments.*
+
+```
+// File: styleguide.c
+// Following sections of includes should go from most core to least
+// 0. first include should be the file's header file
+#include "styleguide.h"
+
+// 1. clib
+#include <stdlib.h>
+#include <stdio.h>
+
+// 2. external dependencies
+#include <evhtp.h>
+
+// 3. other in-project header files
+#include "other.h"
+
+// Preprocessor macros and enums should be all uppercase
+#define TWENTY 20
+
+// Try to avoid declaring globals -- if they are necessary, try to keep
+// them in global_t struct defined in globals.h
+//
+// static int global_variable;
+
+typedef enum {
+  ENUM_NAME__BASE_VALUE = 0,
+  ENUM_NAME__OTHER_VALUE,
+  ENUM_NAME__YET_ANOTHER_VALUE,
+  NUM__ENUM_NAME,
+} enum_name_t;
+
+/**
+ * @brief Doxygen style comments!
+ *
+ * @param a Some integer
+ * @param b Another integer
+ * @return A pointer to 20 bytes of hot, fresh memory
+ * @warning You must free the returned pointer
+ */
+static char *_non_exported_static_func(int a, int b)
+{
+    // don't put (even short) expressions on same line as if
+    // also, put constants first in boolean expressions
+    if (3 <= a)
+        a = 3;
+
+    // if { } else { } should always have curlies
+    if (30 >= b) {
+        ++b; // pre- over post-increment operators
+        --a;
+    } else {
+        a = a * b; // space between operators
+    }
+
+    // use MALLOC + FREE macros (for eventual[?] repo-wide allocator replacement)
+    return MALLOC(20);
+}
+```
+
+
 Contributors
 ===========
-Ramitha
 
-Love
-
-Danish
+Lead
+----
+* Ramitha
+* Love
+* Danish
 
 Project
 =======
-http://www.isi.edu/~youngcho/csci558l-f14/lab5-f14.pdf
+* http://www.isi.edu/~youngcho/csci558l-f14/lab5-f14.pdf
 
 Due
 ====
-Report : September 13
-
-Demo   : September 15
+* Report : September 13
+* Demo   : September 15
 
 Summary
 ======
