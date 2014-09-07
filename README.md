@@ -75,8 +75,8 @@ Contributors
 Lead
 ----
 * Ramitha
-* Love
 * Danish
+* Love
 
 Project
 =======
