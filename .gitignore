@@ -23,4 +23,4 @@
 *.hex
 
 # Data
-.bin
+*.bin
