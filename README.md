@@ -1,7 +1,7 @@
 uftp
 ====
 
-USC558L => Lab5 FTP
+USC558L => Lab5 Implementing Custom FTP
 
 ## STYLEGUIDE
 
