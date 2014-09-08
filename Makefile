@@ -12,4 +12,10 @@ create:
 	./$(SCRIPT_DIR)/create1GB.sh
 
 build:
+	-mkdir -p $(BIN_DIR)
 	$(CC) -o $(BIN_DIR)/main $(SRC_DIR)/main.c
+
+clean:
+	@echo "Deleting bin folder"
+	rm -rf $(BIN_DIR)/*
+
