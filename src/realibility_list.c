@@ -24,10 +24,12 @@ void create_nack_list(){
 
 void print_file_packet_wise(char *data_ptr, long long int total_size){
     long long int seq_num = 0;
-    void *packet_data;
+    char *packet_data;
     for (;seq_num<=total_size;){
         memcpy(packet_data, data_ptr[seq_num], packet_size);
-        printf("seq number = %lld and data = %s\n", seq_num, (void *)packet_data);
+        //TODO memcpy is not working.
+        strncpy(dest, data_ptr[seq_num], packet_size_;
+        printf("seq number = %lld and data = %s\n", seq_num, packet_data);
         seq_num += packet_size;
     }
 }
