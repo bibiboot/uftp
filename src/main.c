@@ -2,16 +2,7 @@
 #include "globals.h"
 #include "hashl.h"
 #include "mmap.h"
-
-/*
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <errno.h>
-*/
+#include "realibility_list.h"
 
 void test_ll(){
     My402ListElem *elem = NULL;
@@ -79,7 +70,11 @@ int main(int argc, char *argv[]){
     test_global();
     test_hashmap();
 
+    // Test memory map files
     char *filename = "etc/data/data.bin";
     long long int total_file_size = 0;
     char *data_ptr = get_memory_map_ptr(filename, &total_file_size);
+
+    // Test create list
+    create_data_list(total_file_size);
 }
