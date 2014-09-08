@@ -2,6 +2,7 @@
 
 #include "uthash.h"
 #include "config.h"
+#include "my402list.h"
 
 typedef struct hashl {
     uint16_t seq_num;
@@ -13,6 +14,8 @@ typedef struct hashl {
 struct globals {
     struct config config;
     hashed_link *hashl;
+    My402List datal;
+    My402List nackl;
 };
 
 extern struct globals globals;
