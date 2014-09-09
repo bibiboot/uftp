@@ -5,6 +5,9 @@
 #include "list.h"
 #include "parser.h"
 #include "packetize.h"
+#include "conn.h"
+#include "reciever.h"
+#include "sender.h"
 
 void test_arrived(){
     globals.config.total_size = 27;
@@ -61,8 +64,34 @@ void test_create_write_list(){
     //write_data_list_to_file();
 }
 
+void test_conn(){
+    reciever_conn_setup();
+    sender_conn_setup();
+}
+
+void test_socket(){
+
+    if (fork() == 0) {
+        // Recv Child
+        reciever();
+        DBG("RECV Exiting");
+        // Close the child recv socket
+        exit(0);
+    }
+
+    if (fork() == 0) {
+        // Send child
+        sender();
+        // Close the child send socket
+        exit(0);
+    }
+    while(1);
+}
+
 int main(int argc, char *argv[]){
     //test_create_write_list();
     //test_append_retrans();
-    test_arrived();
+    //test_arrived();
+    test_conn();
+    test_socket();
 }
