@@ -27,5 +27,6 @@ int get_recieved_packet_type(char *packet, long long unsigned int size){
  */
 char *get_payload(int packet_type){
     // Switch and add methods for different types
-    return NULL;
+    char *temp;
+    return temp;
 }
