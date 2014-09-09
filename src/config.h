@@ -1,9 +1,9 @@
 #pragma once
 
 #define CONFIG_INIT { \
-    .filename = "etc/data/data.bin", \
+    .filename = "etc/data/read.bin", \
     .recv_filename = "etc/data/recv.bin", \
-    .packet_size = 8*10000, \
+    .packet_size = 8, \
     .port = 8081, \
     .total_size = 0, \
     .rtt = 2, }
