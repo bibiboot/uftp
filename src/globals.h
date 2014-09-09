@@ -15,7 +15,8 @@
 
 // Hashmap data structure
 typedef struct hashl {
-    uint16_t seq_num;
+    // Sequence number
+    long long unsigned int seq_num;
     // Address of the node in list.
     My402ListElem *data_node_ptr;
     My402ListElem *nack_node_ptr;
@@ -41,7 +42,7 @@ struct globals {
     // Linked list
     My402List datal;
     My402List nackl;
-    // Current maximum read seq num
+    // Current maximum recieved seq num
     long long unsigned current_seq;
 };
 

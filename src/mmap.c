@@ -1,7 +1,10 @@
 #include "mmap.h"
 
+/**
+ * @brief Get the complete file into memory
+ */
 char * get_memory_map_ptr(const char *filename, long long unsigned int *total_size){
-    int fd, offset=100;
+    int fd;
     char *data;
     struct stat sbuf;
 
@@ -20,11 +23,15 @@ char * get_memory_map_ptr(const char *filename, long long unsigned int *total_si
 	exit(1);
     }
 
+    // Get file size in Bytes
     *total_size = (long long unsigned int)sbuf.st_size;
-    offset = *total_size;
     return data;
 }
 
+/**
+ * @brief Iterate the data list and write into file
+ *        Read size from each node
+ */
 void write_data_list_to_file(){
     // Open the file for writing
     FILE *fp = fopen(globals.config.recv_filename, "w");
@@ -37,7 +44,7 @@ void write_data_list_to_file(){
     // Iterate over the data list
     for (elem=My402ListFirst(&globals.datal); elem != NULL; elem=My402ListNext(&globals.datal, elem)) {
         struct node *data_node = (elem->obj);
-        DBG("[%p] : SEQ = %llu", elem->obj, data_node->seq_num);
+        DBG("[%p] : WRITING SEQ = %llu", elem->obj, data_node->seq_num);
         // Write a packet into the file
         write_packet_to_file(fp, data_node);
     }
@@ -45,10 +52,13 @@ void write_data_list_to_file(){
     fclose(fp);
 }
 
+/**
+ * @brief Write one node data into file
+ *        size denotes how much to write
+ *        one denotes char size (1Bytes)
+ */
 void write_packet_to_file(FILE *fp, struct node *data_node){
-    //DBG("Writing %s", buffer);
     int n = fwrite(data_node->mem_ptr, 1, data_node->size, fp);
-    DBG("%d", n);
     /*
     if (fwrite(buffer, 1, globals.config.packet_size, fp) != globals.config.packet_size){
         DBG("Error in writing");
