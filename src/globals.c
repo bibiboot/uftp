@@ -2,5 +2,6 @@
 
 struct globals globals = {
     .config = CONFIG_INIT,
-    .hashl = NULL
+    .hashl = NULL,
+    .current_seq = 0
 };

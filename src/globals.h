@@ -25,9 +25,11 @@ typedef struct hashl {
 // Data list is stored as node below
 // Both nack and data list have same type of node
 struct node {
-    uint16_t seq_num;
+    long long unsigned int seq_num;
     // Its pointing to the start address of data
     char *mem_ptr;
+    // Size in bits
+    long long unsigned int size;
 };
 
 // datal --> Data list
@@ -36,8 +38,11 @@ struct globals {
     struct config config;
     // Hashmap
     hashed_link *hashl;
+    // Linked list
     My402List datal;
     My402List nackl;
+    // Current maximum read seq num
+    long long unsigned current_seq;
 };
 
 extern struct globals globals;
