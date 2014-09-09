@@ -22,7 +22,6 @@ create:
 # Build
 build:
 	-mkdir -p $(BIN_DIR)
-	#$(CC) -o $(BIN_DIR)/main $(SRC_DIR)/main.c $(INCLUDES) $(_SOURCES)
 	$(CC) -o $(BIN_DIR)/main $(_SOURCES) $(INCLUDES)
 
 clean:
