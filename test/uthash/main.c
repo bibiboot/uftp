@@ -2,6 +2,22 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
+void test_hashmap(){
+    void *chunk_ptr = malloc(sizeof(100));
+    strcpy(chunk_ptr, "Hello");
+    hashed_link h = { .seq_num = 1 , .dl_ptr = chunk_ptr  };
+    add_hashl(&h);
+
+    hashed_link *result = (hashed_link *)(find_hashl(1));
+    hashed_link *result1 = (hashed_link *)(find_hashl(2));
+    DBG("Name = %s\n", (char*)(result->dl_ptr));
+    DBG("Name = %p\n", (result1));
+}
+*/
+
+
+
 typedef struct hash {
     uint16_t seq_num;
     char *dl_ptr;

@@ -1,4 +1,7 @@
 #include "globals.h"
+#include <string.h>
 
-void create_data_list(long long int total_size);
-void create_nack_list();
+void print_file_packet_wise(char *data_ptr);
+
+void print_list(My402List *list);
+void create_list(char *data_ptr, My402List *list, const char *list_type);

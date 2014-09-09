@@ -60,28 +60,29 @@ int My402ListPrepend(My402List *list, void *item)
 	return TRUE;
 }
 
-int My402ListAppend(My402List *list, void *item)
+//int My402ListAppend(My402List *list, void *item, )
+int My402ListAppend(My402List *list, void *item, My402ListElem **elem )
 {
 
-	My402ListElem *elem=(My402ListElem*)malloc(sizeof(My402ListElem));
+	*elem=(My402ListElem*)malloc(sizeof(My402ListElem));
 
 	/*Checking if Malloc failed*/
-	if(elem==NULL)
+	if(*elem==NULL)
 		return FALSE;
 
 	/*Assigning values to the node*/
-    elem->next=NULL;
-	elem->prev=NULL;
-	elem->obj=(void*)item;
+    (*elem)->next=NULL;
+	(*elem)->prev=NULL;
+	(*elem)->obj=(void*)item;
 
 
 	/*If List is not empty then adding before first*/
 	if(list->num_members==0)
 	{
-	    ((list->anchor).next)=elem;
-        ((list->anchor).prev)=elem;
-        elem->next=&(list->anchor);
-        elem->prev=&(list->anchor);
+	    ((list->anchor).next)=*elem;
+        ((list->anchor).prev)=*elem;
+        (*elem)->next=&(list->anchor);
+        (*elem)->prev=&(list->anchor);
         list->num_members++;
         return TRUE;
 
@@ -90,10 +91,10 @@ int My402ListAppend(My402List *list, void *item)
 	/*If list is empty then first and last point to the only element*/
 	else
 	{
-        (((list->anchor).prev)->next)=elem;
-        elem->next=&(list->anchor);
-        elem->prev=((list->anchor).prev);
-        ((list->anchor).prev)=elem;
+        (((list->anchor).prev)->next)=*elem;
+        (*elem)->next=&(list->anchor);
+        (*elem)->prev=((list->anchor).prev);
+        ((list->anchor).prev)=*elem;
         list->num_members++;
         return TRUE;
 
@@ -141,7 +142,8 @@ int  My402ListInsertAfter(My402List *list, void *item, My402ListElem *elem)
 
     if(elem==NULL)
     {
-        My402ListAppend(list,item);
+        My402ListElem *temp;
+        My402ListAppend(list,item, &temp);
     }
     else{
         My402ListElem *newElem=(My402ListElem*)malloc(sizeof(My402ListElem));

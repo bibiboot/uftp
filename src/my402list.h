@@ -41,7 +41,9 @@ typedef struct tagMy402List {
 extern int  My402ListLength(My402List*);
 extern int  My402ListEmpty(My402List*);
 
-extern int  My402ListAppend(My402List*, void*);
+//extern int  My402ListAppend(My402List*, void*);
+//extern int My402ListAppend(My402List*, void*, My402ListElem*);
+extern int My402ListAppend(My402List*, void*, My402ListElem**);
 extern int  My402ListPrepend(My402List*, void*);
 extern void My402ListUnlink(My402List*, My402ListElem*);
 extern void My402ListUnlinkAll(My402List*);

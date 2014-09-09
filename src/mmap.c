@@ -1,6 +1,6 @@
 #include "mmap.h"
 
-char * get_memory_map_ptr(const char *filename, long long int *total_size){
+char * get_memory_map_ptr(const char *filename, uint16_t *total_size){
     int fd, offset=100;
     char *data;
     struct stat sbuf;
@@ -22,8 +22,5 @@ char * get_memory_map_ptr(const char *filename, long long int *total_size){
 
     *total_size = (long long int)sbuf.st_size;
     offset = *total_size;
-    printf("Offset %d is '%c' and total size is %llu\n", offset, data[offset], (long long int)sbuf.st_size);
     return data;
 }
-
-
