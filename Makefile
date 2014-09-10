@@ -16,6 +16,11 @@ INCLUDES_A=-I$(SRC_DIR) -I$(CURDIR) \
 	   -I$(NODE_A_DIR) \
 	   -I$(LIB_DIR) \
 
+INCLUDES_B=-I$(SRC_DIR) -I$(CURDIR) \
+	   -I$(CURDIR)/deps/uthash \
+	   -I$(NODE_B_DIR) \
+	   -I$(LIB_DIR) \
+
 # All .c files in src folder
 _SOURCES=$(shell find $(SRC_DIR) -type f -iname '*.[c]')
 _SOURCES_A=$(shell find $(NODE_A_DIR) -type f -iname '*.[c]')
