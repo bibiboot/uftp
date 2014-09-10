@@ -2,12 +2,10 @@
 
 #define CONFIG_INIT { \
     .filename = "etc/data/read.bin", \
-    .recv_filename = "etc/data/recv.bin", \
     .packet_size = 8, \
-    .sender_port = 8084, \
-    .recv_port = 9095, \
+    .sender_port = 8086, \
+    .recv_port = 9097, \
     .hostname_a = "127.0.0.1", \
-    .hostname_b = "127.0.0.1", \
     .total_size = 0, \
     .rtt = 2, }
 
@@ -25,9 +23,7 @@ struct config {
     // Filename provided in command line which is to be send
     char *filename;
     // Filename to which the recieved file is written
-    char *recv_filename;
     char *hostname_a;
-    char *hostname_b;
 };
 
 

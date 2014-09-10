@@ -11,6 +11,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <sys/wait.h>
 
 // Print function name, filename and line number in print
 #define DEBUG(fmt, ...) printf("%s:%d: " fmt, __FILE__, __LINE__, __VA_ARGS__);
@@ -57,6 +58,8 @@ struct globals {
     int sender_fd;
     // Socket address to the reciever
     struct sockaddr_in serv_addr;
+    char hostname_b[100];
+    char recv_filename[100];
 };
 
 extern struct globals globals;

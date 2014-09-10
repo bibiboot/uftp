@@ -29,7 +29,7 @@ void create_list(char *data_ptr, My402List *list, const char *list_type){
     // Iterate and add nodes with seq_num and mem address
     long long unsigned int seq_num = 0;
     char *last_mem_addr = data_ptr + globals.config.total_size;
-    DBG("Last Address = %p and First Address = %p", data_ptr, last_mem_addr);
+    //DBG("Last Address = %p and First Address = %p", data_ptr, last_mem_addr);
 
     for (;seq_num<globals.config.total_size; seq_num += globals.config.packet_size){
         struct node *data_node = malloc(sizeof(struct node));
@@ -40,7 +40,7 @@ void create_list(char *data_ptr, My402List *list, const char *list_type){
         long long unsigned int size = globals.config.total_size - seq_num > globals.config.packet_size ? globals.config.packet_size : globals.config.total_size - seq_num;
         // size in bits
         data_node->size = size;
-        DBG("SIZE TILL NOW = %llu", size);
+        //DBG("SIZE TILL NOW = %llu", size);
 
         My402ListElem *link_node;
         if (My402ListAppend(list , data_node, &link_node)==0)

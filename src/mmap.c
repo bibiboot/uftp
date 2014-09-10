@@ -34,7 +34,7 @@ char * get_memory_map_ptr(const char *filename, long long unsigned int *total_si
  */
 void write_data_list_to_file(){
     // Open the file for writing
-    FILE *fp = fopen(globals.config.recv_filename, "w");
+    FILE *fp = fopen(globals.recv_filename, "w");
     if (fp == NULL){
         DBG("Can not open file for writing");
         exit(0);
