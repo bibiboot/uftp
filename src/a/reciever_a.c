@@ -9,7 +9,7 @@ void reciever(){
 
     while (1){
         DBG(".........Waiting.......");
-        int n=recvfrom(globals.recv_fd, buffer, 1024, 0,
+        int n=recvfrom(globals.a_recv_fd, buffer, 1024, 0,
                        (struct sockaddr *)&from, &fromlen);
         if (n < 0) {
             perror("Error in recv");

@@ -17,6 +17,6 @@ int send_packet(struct node *data_node){
     struct sockaddr *to = (struct sockaddr *)&globals.serv_addr;
     int tolen = sizeof(struct sockaddr);
 
-    int n = sendto(globals.sender_fd, data_node->mem_ptr, data_node->size, 0, to, tolen);
+    int n = sendto(globals.a_sender_fd, data_node->mem_ptr, data_node->size, 0, to, tolen);
     return n;
 }

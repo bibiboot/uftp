@@ -53,9 +53,11 @@ struct globals {
     // Current maximum recieved seq num
     long long unsigned current_seq;
     // Reciever fd
-    int recv_fd;
+    int a_recv_fd;
+    int b_recv_fd;
     // Sender fd
-    int sender_fd;
+    int a_sender_fd;
+    int b_sender_fd;
     // Socket address to the reciever
     struct sockaddr_in serv_addr;
     char hostname_b[100];

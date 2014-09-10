@@ -5,9 +5,9 @@
 #include "list.h"
 #include "parser.h"
 #include "packetize.h"
-#include "conn_a.h"
-#include "sender_a.h"
-#include "reciever_a.h"
+#include "conn_b.h"
+#include "sender_b.h"
+#include "reciever_b.h"
 
 void test_arrived(){
     globals.config.total_size = 27;
@@ -94,44 +94,28 @@ void init(){
 
     // Create socket connection
     reciever_conn_setup();
-    sender_conn_setup();
-}
-
-int cmd_parser(int argc, char *argv[]){
-    if (argc != 3) {
-        return 1;
-    }
-
-    int num = sscanf(argv[2], "%[^:]:%s", globals.hostname_b, globals.recv_filename);
-    if (num != 2) {
-        return 1;
-    }
-    return 0;
+    //sender_conn_setup();
 }
 
 void start(){
     if (fork() == 0) {
         // Recv Child
         reciever();
-        DBG("RECV Exiting");
+        DBG("BRECV Exiting");
         // Close the child recv socket
         exit(0);
     }
 
+    /*
     if (fork() == 0) {
         // Send child
         sender();
         // Close the child send socket
         exit(0);
-    }
+    }*/
 }
 
 int main(int argc, char *argv[]){
-
-    // Command line parsing
-    if (cmd_parser(argc, argv) != 0) {
-        DBG("Error in parsing command line");
-    }
 
     // Initilaization
     init();
@@ -142,6 +126,6 @@ int main(int argc, char *argv[]){
     // Wait for both the childs to get over
     int status;
     waitpid(-1, &status, 0);
-    waitpid(-1, &status, 0);
+    //waitpid(-1, &status, 0);
     DBG("Parent Exiting");
 }
