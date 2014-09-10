@@ -6,8 +6,8 @@
 #include "parser.h"
 #include "packetize.h"
 #include "conn.h"
-#include "reciever.h"
-#include "sender.h"
+#include "reciever_a.h"
+#include "sender_a.h"
 
 void test_arrived(){
     globals.config.total_size = 27;
