@@ -53,29 +53,20 @@ vlong create_data_packet(char *mem_ptr, vlong payload_size,
     bzero(*buffer, header_len + payload_size);
 
     memcpy(curr_buffer, "1", PACKET_TYPE_LEN);
-    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
-    //DBG("[%llu] PACKET_TYPE [%s] (%d)", seq_num, curr_buffer, PACKET_TYPE_LEN);
-    //DBG("[%llu]", seq_num);
     curr_buffer += PACKET_TYPE_LEN;
 
     char seq_num_st[SEQ_NUM_LEN];
     snprintf(seq_num_st, SEQ_NUM_LEN, "%llu", seq_num);
     memcpy(curr_buffer, seq_num_st, SEQ_NUM_LEN);
-    //DBG("[%llu] SEQ_NUM [%s] (%d)", seq_num, curr_buffer, SEQ_NUM_LEN);
-    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
     curr_buffer += SEQ_NUM_LEN;
 
     char checksum[10] = "XXXXXXXXXX";
     memcpy(curr_buffer, checksum, CHECKSUM_LEN);
-    //DBG("[%llu] CHECKSUM [%s] (%d)", seq_num, curr_buffer, CHECKSUM_LEN);
-    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
     curr_buffer += CHECKSUM_LEN;
 
     memcpy(curr_buffer, mem_ptr, (size_t)payload_size);
-    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
 
     vlong buffer_len = header_len + payload_size;;
-    //DBG("[%llu] PAYLOAD [%s], (%llu) TOTAL SIZE [%d]", seq_num, curr_buffer, payload_size, buffer_len);
     DBG("[DATA SEND] SEQ NUM: %llu, TOTAL SIZE [%llu]", seq_num, buffer_len);
     return buffer_len;
 }
@@ -95,17 +86,14 @@ vlong create_dummy_packet(char **buffer){
     char *curr_buffer = *buffer;
 
     memcpy(curr_buffer, "2", PACKET_TYPE_LEN);
-    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
     curr_buffer += PACKET_TYPE_LEN;
 
     char checksum[10] = "XXXXXXXXXX";
     memcpy(curr_buffer, checksum, CHECKSUM_LEN);
-    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
     curr_buffer += CHECKSUM_LEN;
 
     memcpy(curr_buffer, globals.recv_filename, (size_t)payload_size);
-    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
-    //
+
     vlong buffer_len = header_len + payload_size;;
     DBG("DUMMY : [%s] [%llu]", *buffer, buffer_len);
     return buffer_len;

@@ -1,10 +1,10 @@
 #include "sender_a.h"
 
 void sender(){
+    // Iterate the data list and send data
     My402ListElem *elem=NULL;
     for (elem=My402ListFirst(&globals.datal); elem != NULL; elem=My402ListNext(&globals.datal, elem)) {
         struct node *data_node = (elem->obj);
-        //printf("[%llu] : PRINT SEQ = %llu, DATA = %s\n", data_node->size, data_node->seq_num, data_node->mem_ptr);
         int n = send_packet(data_node);
         if (n < 0) {
             perror("Error on send");
@@ -12,7 +12,7 @@ void sender(){
         }
     }
 
-    // Send dummy data
+    // Send dummy data denotes the end of sending data
     send_dummy_packet();
 }
 
@@ -27,6 +27,8 @@ int send_packet(struct node *data_node){
                                           data_node->seq_num, &buffer);
 
     int n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+
+    free(buffer);
     return n;
 }
 
@@ -39,13 +41,11 @@ int send_dummy_packet(){
     char *buffer;
     vlong buffer_len = create_dummy_packet(&buffer);
 
-    //DBG("[%d] SEND : %s", buffer_len, buffer);
-
-
     int n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
     n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
     n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
     n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
     n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    free(buffer);
     return n;
 }

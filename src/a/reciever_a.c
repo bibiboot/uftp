@@ -15,7 +15,6 @@ void reciever(){
             perror("Error in recv");
             exit(1);
         }
-        //DBG("[] Here is the message: %s\n", buffer);
         int packet_type = get_recieved_packet_type(buffer);
 
         switch (packet_type) {
