@@ -3,6 +3,14 @@ uftp
 
 USC558L => Lab5 Implementing Custom FTP
 
+
+Entry to add in /etc/hosts
+=========================
+```
+sen 127.0.0.1
+rev 127.0.0.1
+```
+
 ## STYLEGUIDE
 
 ### TODO: Please add / edit to the below code demonstration
