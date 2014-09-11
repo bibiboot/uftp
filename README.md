@@ -11,6 +11,30 @@ sen 127.0.0.1
 rev 127.0.0.1
 ```
 
+Alias to add in ~/.bashrc or ~/.profile (Shorcuts)
+=================================================
+```
+alias synd='scp -r /home/dan/Work/uftp sc558ce@users.deterlab.net:/proj/USC558L/exp/drehman/work'
+alias a='make build_a'
+alias b='make build_b'
+alias ra1='./bin/a etc/data/data.bin rev:etc/data/recv.bin'
+alias rb='./bin/b'
+```
+
+Run
+==
+```
+// 1. Build node a
+>> a
+// 2. Build node b
+>> b
+// 3. Start node b
+>> rb
+// 4. Start node a
+>> ra
+```
+
+
 ## STYLEGUIDE
 
 ### TODO: Please add / edit to the below code demonstration
