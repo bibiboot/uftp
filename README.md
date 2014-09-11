@@ -17,7 +17,7 @@ Alias to add in ~/.bashrc or ~/.profile (Shorcuts)
 alias synd='scp -r /home/dan/Work/uftp sc558ce@users.deterlab.net:/proj/USC558L/exp/drehman/work'
 alias a='make build_a'
 alias b='make build_b'
-alias ra1='./bin/a etc/data/data.bin rev:etc/data/recv.bin'
+alias ra='./bin/a etc/data/data.bin rev:etc/data/recv.bin'
 alias rb='./bin/b'
 ```
 
