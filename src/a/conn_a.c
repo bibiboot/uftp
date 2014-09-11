@@ -21,7 +21,7 @@ void reciever_conn_setup(){
          exit(1);
      }
 
-     listen(globals.a_recv_fd,5);
+     listen(globals.a_recv_fd, globals.config.queue_len);
 }
 
 void sender_conn_setup(){

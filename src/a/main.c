@@ -9,53 +9,6 @@
 #include "sender_a.h"
 #include "reciever_a.h"
 
-void test_append_retrans(){
-
-    vlong *retrans_list = malloc(sizeof(vlong)*1);
-    retrans_list[0] = 0;
-    int num_retrans = 1;
-
-    add_retransmission_node(retrans_list, num_retrans);
-
-    print_list(&globals.datal);
-}
-
-void test_create_write_list(){
-    // Create memory map files
-    //char *data_ptr = get_memory_map_ptr(globals.config.filename, &globals.config.total_size);
-
-    // Create data list
-    //DBG("%llu", globals.config.total_size);
-    //create_list(data_ptr, &globals.datal, DATA);
-
-    // Print data list
-    //print_list(&globals.datal);
-    // Print data list
-    //print_list(&globals.datal);
-    /*
-    // Create nack list
-    create_list(data_ptr, &globals.nackl, NACK);
-
-    // Print data in packet
-    //print_file_packet_wise(data_ptr);
-
-    // Print nack list
-    print_list(&globals.nackl);
-
-    // Delete node with seq_num = 2
-    //delete_node_nack_list(2);
-
-    // Print nack list
-    //print_list(&globals.nackl);
-
-    // Get current nack_list
-    //get_current_nack_list();
-
-    */
-    // Write into file
-    //write_data_list_to_file();
-}
-
 void init(){
 
     // Create memory map files

@@ -11,7 +11,7 @@ bool is_nack_list_empty() {
     } else {
         // Print the list
         DBG("---------");
-        print_list(&globals.nackl);
+        //print_list(&globals.nackl);
         DBG("---------");
         // Send nack packet
         send_nack_packet();

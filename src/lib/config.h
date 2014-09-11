@@ -5,6 +5,7 @@
     .a_recv_port = 3005, \
     .b_recv_port = 2005, \
     .total_size = 0, \
+    .queue_len = 10000000, \
     .rtt = 2, }
 
 struct config {
@@ -18,6 +19,8 @@ struct config {
     long long unsigned int packet_size;
     // Total size of the file which is send over network
     long long unsigned int total_size;
+    // Queue length at the listen socket
+    long long unsigned int queue_len;
 };
 
 

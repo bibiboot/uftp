@@ -9,17 +9,6 @@
 #include "sender_b.h"
 #include "reciever_b.h"
 
-void test_append_retrans(){
-
-    vlong *retrans_list = malloc(sizeof(vlong)*1);
-    retrans_list[0] = 0;
-    int num_retrans = 1;
-
-    add_retransmission_node(retrans_list, num_retrans);
-
-    print_list(&globals.datal);
-}
-
 void init(){
 
     // Text file
@@ -29,12 +18,17 @@ void init(){
     // 1GB
     //globals.config.total_size = 1048576000;
     // 1MB
-    globals.config.total_size = 1048576;
+    //globals.config.total_size = 1048576;
+
+    // 200MB
+    //globals.config.total_size = 209715200;
+
+    // 20MB
+    globals.config.total_size = 20971520;
 
     // Create data list
     create_recv_list(&globals.datal, DATA);
     create_recv_list(&globals.nackl, NACK);
-
 
     strcpy(globals.recv_filename, "etc/data/recv.bin");
 

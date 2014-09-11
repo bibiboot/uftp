@@ -46,6 +46,14 @@ int send_dummy_packet(){
     n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
     n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
     n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
     free(buffer);
     return n;
 }
