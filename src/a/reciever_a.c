@@ -1,15 +1,15 @@
 #include "reciever_a.h"
 
 void reciever(){
-    char buffer[256];
-    bzero(buffer,256);
+    char buffer[globals.config.read_buffer_size];
+    bzero(buffer,globals.config.read_buffer_size);
 
     struct sockaddr_in from;
     int fromlen = sizeof(struct sockaddr_in);
 
     while (1){
         int size_recieved=recvfrom(globals.a_recv_fd,
-                                   buffer, 1024, 0,
+                                   buffer, globals.config.read_buffer_size, 0,
                        (struct sockaddr *)&from, &fromlen);
         if (size_recieved < 0) {
             perror("Error in recv");

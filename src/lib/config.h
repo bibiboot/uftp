@@ -6,6 +6,7 @@
     .b_recv_port = 2005, \
     .total_size = 0, \
     .queue_len = 10000000, \
+    .read_buffer_size = 1024,\
     .rtt = 2, }
 
 struct config {
@@ -21,6 +22,7 @@ struct config {
     long long unsigned int total_size;
     // Queue length at the listen socket
     long long unsigned int queue_len;
+    long long unsigned int read_buffer_size;;
 };
 
 

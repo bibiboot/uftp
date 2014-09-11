@@ -48,13 +48,13 @@ COMPLETE_FILE_REACHED:
 }
 
 int recv_packet(){
-    char buffer[RECV_WINDOW];
-    bzero(buffer, RECV_WINDOW);
+    char buffer[globals.config.read_buffer_size];
+    bzero(buffer,globals.config.read_buffer_size);
 
     struct sockaddr_in from;
     int fromlen = sizeof(struct sockaddr_in);
 
-    int size_recieved=recvfrom(globals.b_recv_fd, buffer, 1024, 0,
+    int size_recieved=recvfrom(globals.b_recv_fd, buffer, globals.config.read_buffer_size, 0,
                                (struct sockaddr *)&from, &fromlen);
     if (size_recieved < 0) {
         perror("Error in recv");
