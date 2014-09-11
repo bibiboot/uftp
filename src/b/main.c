@@ -35,9 +35,12 @@ void init(){
     create_recv_list(&globals.datal, DATA);
     create_recv_list(&globals.nackl, NACK);
 
+
+    strcpy(globals.recv_filename, "etc/data/recv.bin");
+
     // Create socket connection
     reciever_conn_setup();
-    //sender_conn_setup();
+    sender_conn_setup();
 }
 
 void start(){

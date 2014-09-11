@@ -2,8 +2,8 @@
 
 #define CONFIG_INIT { \
     .packet_size = 1000, \
-    .a_recv_port = 3002, \
-    .b_recv_port = 2002, \
+    .a_recv_port = 3005, \
+    .b_recv_port = 2005, \
     .hostname_a = "127.0.0.1", \
     .total_size = 0, \
     .rtt = 2, }

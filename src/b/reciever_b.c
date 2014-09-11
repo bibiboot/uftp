@@ -2,7 +2,23 @@
 
 #define RECV_WINDOW 1500
 
-char filename[100] = "etc/data/recv.bin";
+//char filename[100] = "etc/data/recv.bin";
+
+bool is_nack_list_empty() {
+    DBG("NUM NACK LIST = %d", (globals.nackl).num_members);
+    if ((globals.nackl).num_members == 0) {
+        return true;
+    } else {
+        // Print the list
+        DBG("---------");
+        print_list(&globals.nackl);
+        DBG("---------");
+        // Send nack packet
+        send_nack_packet();
+        return false;
+    }
+}
+
 
 bool is_last_packet_recieved() {
     return globals.last_bit_arrived;
@@ -28,7 +44,7 @@ void reciever(){
     }
 COMPLETE_FILE_REACHED:
     DBG("Complete file is downloaded");
-    write_data_list_to_file(filename);
+    write_data_list_to_file(globals.recv_filename);
 }
 
 int recv_packet(){
@@ -75,8 +91,22 @@ void data_packet_handler(char *buffer, int size_recieved) {
 
     //DBG("RECIEVED: [%d], SEQ: [%s], CHECKSUM: [%s], PAYLOAD: [%s]",
         //size_recieved, seq_num, checksum, payload);
-    DBG("RECIEVED: [%d], SEQ: [%s], CHECKSUM: [%s]",
-        size_recieved, seq_num, checksum);
+
+    vlong seq_num_int = atoi(seq_num);
+
+    // Check if duplicate packet
+    if (is_duplicate(seq_num_int)) {
+        DBG("[DUPLICATE RECV] SEQ NUM: %llu", seq_num_int);
+        return;
+    }
+
+    // Update the maximum sequence read
+    if (seq_num_int > globals.current_seq) {
+        globals.current_seq = seq_num_int;
+    }
+
+    DBG("[DATA RECV] SIZE RECV: %d, SEQ: %s,  CURR MAX: %llu",
+        size_recieved, seq_num, globals.current_seq);
 
     // Checksum matched and sequence number known
     // Update the memory pointer
@@ -89,7 +119,7 @@ void data_packet_handler(char *buffer, int size_recieved) {
 void dummy_packet_handler(char *buffer, int size_recieved) {
     // On the bit for last bit arrived
     globals.last_bit_arrived = true;
-    DBG("DUMMY PACKET: [%s]", buffer);
+    DBG("[DUMMY RECV]: [%s]", buffer);
 
     // Get checksum and filename of the destination
     char *checksum, *payload;

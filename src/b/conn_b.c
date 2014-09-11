@@ -32,7 +32,7 @@ void sender_conn_setup(){
         exit(1);
     }
 
-    server = gethostbyname(globals.hostname_b);
+    server = gethostbyname(globals.hostname_a);
     if (server == NULL) {
         fprintf(stderr,"ERROR, no such host\n");
         exit(0);

@@ -41,6 +41,11 @@ int send_dummy_packet(){
 
     //DBG("[%d] SEND : %s", buffer_len, buffer);
 
+
     int n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
     return n;
 }

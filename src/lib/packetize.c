@@ -4,11 +4,31 @@
  * @brief Create a character buffer with
  *        certain format so that the packet can
  *        be detected
+ *        | PAKCET_TYPE | CHECKSUM | PAY_LOAD |
+ *             1Byte        10Byte  packet_size
+ *        | Comma seperated list f sequence number |
  *
  * @param List of nack sequence number
  * @return character array with format
  */
-void create_nack_packet(){
+vlong create_nack_packet(char **buffer, vlong seq_num){
+
+    vlong header_len = PACKET_TYPE_LEN + CHECKSUM_LEN;
+    *buffer = malloc(sizeof(char)*(header_len + SEQ_NUM_LEN));
+    char *curr_buffer = *buffer;
+    bzero(*buffer, header_len + SEQ_NUM_LEN);
+
+    memcpy(curr_buffer, "3", PACKET_TYPE_LEN);
+    curr_buffer += PACKET_TYPE_LEN;
+
+    char checksum[10] = "XXXXXXXXXX";
+    memcpy(curr_buffer, checksum, CHECKSUM_LEN);
+    curr_buffer += CHECKSUM_LEN;
+
+    sprintf(curr_buffer, "%llu", seq_num);
+
+    vlong buffer_len = header_len + SEQ_NUM_LEN;;
+    return buffer_len;
 }
 
 
@@ -56,7 +76,7 @@ vlong create_data_packet(char *mem_ptr, vlong payload_size,
 
     vlong buffer_len = header_len + payload_size;;
     //DBG("[%llu] PAYLOAD [%s], (%llu) TOTAL SIZE [%d]", seq_num, curr_buffer, payload_size, buffer_len);
-    DBG("[%llu]  (%llu) TOTAL SIZE [%llu]", seq_num, payload_size, buffer_len);
+    DBG("[DATA SEND] SEQ NUM: %llu, TOTAL SIZE [%llu]", seq_num, buffer_len);
     return buffer_len;
 }
 

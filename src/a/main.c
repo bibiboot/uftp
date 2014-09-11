@@ -9,14 +9,6 @@
 #include "sender_a.h"
 #include "reciever_a.h"
 
-void test_arrived(){
-    globals.config.total_size = 27;
-    create_recv_list(&globals.datal, DATA);
-    create_recv_list(&globals.nackl, DATA);
-
-    print_list(&globals.datal);
-}
-
 void test_append_retrans(){
 
     vlong *retrans_list = malloc(sizeof(vlong)*1);
@@ -94,19 +86,19 @@ int cmd_parser(int argc, char *argv[]){
 }
 
 void start(){
-    /*
     if (fork() == 0) {
         // Recv Child
         reciever();
         DBG("RECV Exiting");
         // Close the child recv socket
         exit(0);
-    }*/
+    }
 
     if (fork() == 0) {
         // Send child
         sender();
         // Close the child send socket
+        DBG("SENDER Exiting");
         exit(0);
     }
 }
@@ -127,7 +119,7 @@ int main(int argc, char *argv[]){
 
     // Wait for both the childs to get over
     int status;
-    //waitpid(-1, &status, 0);
+    waitpid(-1, &status, 0);
     waitpid(-1, &status, 0);
     DBG("---------CLOSING DOWN-------");
 }

@@ -65,6 +65,29 @@ vlong get_packet_data_dummy(char *buffer, int size_recieved,
 
     curr_buffer += CHECKSUM_LEN;
     memcpy(*payload, curr_buffer, payload_size);
+    strcpy(globals.recv_filename, *payload);
+    DBG("DUMMY PAYLOAD: %s", *payload);
+
+    return payload_size;
+}
+
+vlong get_packet_data_nack(char *buffer, int size_recieved,
+                           char **checksum, char **payload){
+    vlong header_len = PACKET_TYPE_LEN + CHECKSUM_LEN;
+    vlong payload_size = size_recieved - header_len;
+
+    *payload = malloc(sizeof(char)*payload_size);
+    // Create memory for checksum
+    *checksum = malloc(sizeof(char)*CHECKSUM_LEN);
+
+    char *curr_buffer = buffer;
+
+    curr_buffer += PACKET_TYPE_LEN;
+    memcpy(*checksum, curr_buffer, CHECKSUM_LEN);
+
+    curr_buffer += CHECKSUM_LEN;
+    memcpy(*payload, curr_buffer, payload_size);
+    DBG("[NACK RECV]: SEQ NUMBER: %s", *payload);
 
     return payload_size;
 }

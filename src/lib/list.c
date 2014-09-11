@@ -148,6 +148,7 @@ void create_recv_list(My402List *list, const char *list_type){
     for (;seq_num<globals.config.total_size; seq_num += globals.config.packet_size){
         struct node *data_node = malloc(sizeof(struct node));
         data_node->seq_num = seq_num;
+        data_node->mem_ptr = NULL;
 
         My402ListElem *link_node;
         if (My402ListAppend(list , data_node, &link_node)==0)
@@ -174,16 +175,34 @@ void create_recv_list(My402List *list, const char *list_type){
     }
 }
 
+bool is_duplicate(vlong seq_num) {
+    // If memory pointer mapping exist in the linked list
+    // then the seq number has already being recieved
+    hashed_link *hash_node = (hashed_link *)(find_hashl(seq_num));
+    if (!hash_node) {
+        DBG("This should never happen");
+        exit(1);
+    }
+    if ( ((struct node*)((hash_node->data_node_ptr)->obj))->mem_ptr == NULL ) {
+        return false;
+    }
+    return true;
+}
+
+/*
 bool is_nack_list_empty() {
     DBG("NUM NACK LIST = %d", (globals.nackl).num_members);
     if ((globals.nackl).num_members == 0) {
         return true;
     } else {
         // Print the list
-        print_list(&globals.nackl);
+        //print_list(&globals.nackl);
+        // Send nack packet
+        send_nack_packet();
         return false;
     }
 }
+*/
 
 /**
  * @brief Print nodes data using memcpy
