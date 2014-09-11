@@ -61,10 +61,6 @@ int recv_packet(){
         exit(1);
     }
 
-    //DBG("[%d] Seq: [%llu], Recv: [%s], Payload: [%s]",
-    //    size_recieved, seq_num, buffer,
-    //    buffer+PACKET_TYPE_LEN+SEQ_NUM_LEN+CHECKSUM_LEN);
-
     // Check the packet with checksum
     // If no match then return i.e. drop packet
     int packet_type = get_recieved_packet_type(buffer);
@@ -89,14 +85,12 @@ void data_packet_handler(char *buffer, int size_recieved) {
     vlong payload_size = get_packet_data(buffer, size_recieved, &seq_num, &checksum, &payload);
     vlong sq_num= atoll(seq_num);
 
-    //DBG("RECIEVED: [%d], SEQ: [%s], CHECKSUM: [%s], PAYLOAD: [%s]",
-        //size_recieved, seq_num, checksum, payload);
-
     vlong seq_num_int = atoi(seq_num);
 
     // Check if duplicate packet
     if (is_duplicate(seq_num_int)) {
         DBG("[DUPLICATE RECV] SEQ NUM: %llu", seq_num_int);
+        // Free all the memory taken
         return;
     }
 
@@ -114,6 +108,9 @@ void data_packet_handler(char *buffer, int size_recieved) {
 
     // Remove the node from the nack list
     delete_node_nack_list(sq_num);
+
+    //TODO: Free the seq_num and checksum
+    free(checksum);
 }
 
 void dummy_packet_handler(char *buffer, int size_recieved) {
@@ -125,4 +122,6 @@ void dummy_packet_handler(char *buffer, int size_recieved) {
     char *checksum, *payload;
     vlong payload_size = get_packet_data_dummy(buffer, size_recieved, &checksum, &payload);
     // Payload here is the filename
+    //TODO: Free the checksum
+    free(checksum);
 }

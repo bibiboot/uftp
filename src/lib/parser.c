@@ -22,6 +22,14 @@ int get_recieved_packet_type(char *packet, vlong size){
     }
 }
 
+/**
+ * @brief Parse data packet
+ *
+ * @return payload actual data
+ *         seq_num seq num of the paylaod
+ *         checksum check of the payload
+ *         payload size
+ */
 vlong get_packet_data(char *buffer, int recieved_size,
                       char **seq_num, char **checksum,
                       char **payload){
@@ -49,6 +57,15 @@ vlong get_packet_data(char *buffer, int recieved_size,
     return payload_size;
 }
 
+/**
+ * @brief Parse dummy packet
+ *        This packet denotes the existense of the last bit of file
+ *        payload here is the destination filename
+ *
+ * @return payload actual data
+ *         checksum check of the payload
+ *         payload size
+ */
 vlong get_packet_data_dummy(char *buffer, int size_recieved,
                             char **checksum, char **payload){
     vlong header_len = PACKET_TYPE_LEN + CHECKSUM_LEN;
@@ -71,6 +88,15 @@ vlong get_packet_data_dummy(char *buffer, int size_recieved,
     return payload_size;
 }
 
+/**
+ * @brief Parse nack packet
+ *        This packet denotes the existense of the last bit of file
+ *        payload here is the destination filename
+ *
+ * @return payload actual data
+ *         checksum check of the payload
+ *         payload size
+ */
 vlong get_packet_data_nack(char *buffer, int size_recieved,
                            char **checksum, char **payload){
     vlong header_len = PACKET_TYPE_LEN + CHECKSUM_LEN;

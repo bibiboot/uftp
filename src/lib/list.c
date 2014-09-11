@@ -36,9 +36,8 @@ void create_list(char *data_ptr, My402List *list, const char *list_type){
         // To handle scenario where the last packet is of size less then
         // required
         vlong size = globals.config.total_size - seq_num > globals.config.packet_size ? globals.config.packet_size : globals.config.total_size - seq_num;
-        // size in bits
+        // size in bytes
         data_node->size = size;
-        //DBG("SIZE TILL NOW = %llu", size);
 
         My402ListElem *link_node;
         if (My402ListAppend(list , data_node, &link_node)==0)
@@ -66,7 +65,10 @@ void create_list(char *data_ptr, My402List *list, const char *list_type){
         }
     }
 }
-
+/**
+ * @brief Delete node in the nack list with
+ *        seq number mentioned in the param
+ */
 void delete_node_nack_list(vlong seq_num){
     // Get node address from hashmap
     hashed_link *hash_node = (hashed_link *)(find_hashl(seq_num));
@@ -79,7 +81,10 @@ void delete_node_nack_list(vlong seq_num){
     My402ListUnlink(&globals.nackl, hash_node->nack_node_ptr);
     //DBG("[%llu] Removing node", hash_node->seq_num);
 }
-
+/**
+ * @brief Get the current nack list
+ *        that is less the max read sequence number
+ */
 void get_current_nack_list(){
     My402ListElem *elem=NULL;
     for (elem=My402ListFirst(&globals.nackl);
@@ -92,7 +97,7 @@ void get_current_nack_list(){
 
 /**
  * @brief Append node for retransmission
- *
+ * NOT USED
  */
 void add_retransmission_node(vlong *retrans_list, int num_retrans){
     // Iterate the retrans_list
@@ -124,8 +129,6 @@ void update_mem_ptr_data_link(char *buffer, vlong seq_num,
                               vlong size){
     hashed_link *hash_node = (hashed_link *)(find_hashl(seq_num));
     //DBG("UPDATING [%llu]", seq_num);
-    char *mem_ptr = malloc(sizeof(char)*size);
-    //((struct node*)((hash_node->data_node_ptr)->obj))->mem_ptr = mem_ptr;
 
     ((struct node*)((hash_node->data_node_ptr)->obj))->mem_ptr = buffer;
     ((struct node*)((hash_node->data_node_ptr)->obj))->size = size;
@@ -188,21 +191,6 @@ bool is_duplicate(vlong seq_num) {
     }
     return true;
 }
-
-/*
-bool is_nack_list_empty() {
-    DBG("NUM NACK LIST = %d", (globals.nackl).num_members);
-    if ((globals.nackl).num_members == 0) {
-        return true;
-    } else {
-        // Print the list
-        //print_list(&globals.nackl);
-        // Send nack packet
-        send_nack_packet();
-        return false;
-    }
-}
-*/
 
 /**
  * @brief Print nodes data using memcpy

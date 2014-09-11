@@ -56,5 +56,7 @@ void nack_packet_handler(char *buffer, int size_recieved){
         perror("Retransmiston: Error in sending packet");
         exit(1);
     }
-
+    //TODO: Free payload and checksum
+    free(payload);
+    free(checksum);
 }

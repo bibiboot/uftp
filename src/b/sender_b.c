@@ -37,9 +37,9 @@ int send_nack_packet(struct node *data_node){
         vlong buffer_len = create_nack_packet(&buffer, data_node->seq_num);
         DBG("[NACK SEND] SEQ NUM: %llu", data_node->seq_num);
 
-
         // Send nack packet
         int n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+        free(buffer);
         if (n < 0) {
             perror("Error in sento");
             exit(1);
