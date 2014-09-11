@@ -4,7 +4,6 @@
     .packet_size = 1000, \
     .a_recv_port = 3005, \
     .b_recv_port = 2005, \
-    .hostname_a = "127.0.0.1", \
     .total_size = 0, \
     .rtt = 2, }
 
@@ -19,8 +18,6 @@ struct config {
     long long unsigned int packet_size;
     // Total size of the file which is send over network
     long long unsigned int total_size;
-    // The hostname of the nodeA
-    char *hostname_a;
 };
 
 
