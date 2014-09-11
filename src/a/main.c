@@ -19,7 +19,7 @@ void test_arrived(){
 
 void test_append_retrans(){
 
-    long long unsigned int *retrans_list = malloc(sizeof(long long unsigned int)*1);
+    vlong *retrans_list = malloc(sizeof(vlong)*1);
     retrans_list[0] = 0;
     int num_retrans = 1;
 
@@ -30,7 +30,7 @@ void test_append_retrans(){
 
 void test_create_write_list(){
     // Create memory map files
-    char *data_ptr = get_memory_map_ptr(globals.config.filename, &globals.config.total_size);
+    //char *data_ptr = get_memory_map_ptr(globals.config.filename, &globals.config.total_size);
 
     // Create data list
     //DBG("%llu", globals.config.total_size);
@@ -64,30 +64,11 @@ void test_create_write_list(){
     //write_data_list_to_file();
 }
 
-
-void test_socket(){
-
-    if (fork() == 0) {
-        // Recv Child
-        reciever();
-        DBG("RECV Exiting");
-        // Close the child recv socket
-        exit(0);
-    }
-
-    if (fork() == 0) {
-        // Send child
-        sender();
-        // Close the child send socket
-        exit(0);
-    }
-    while(1);
-}
-
 void init(){
 
     // Create memory map files
-    char *data_ptr = get_memory_map_ptr(globals.config.filename, &globals.config.total_size);
+    char *data_ptr = get_memory_map_ptr(globals.filename, &globals.config.total_size);
+    DBG("SIZE = %llu", globals.config.total_size);
 
     // Create data list
     create_list(data_ptr, &globals.datal, DATA);
@@ -106,17 +87,21 @@ int cmd_parser(int argc, char *argv[]){
     if (num != 2) {
         return 1;
     }
+
+    strcpy(globals.filename, argv[1]);
+
     return 0;
 }
 
 void start(){
+    /*
     if (fork() == 0) {
         // Recv Child
         reciever();
         DBG("RECV Exiting");
         // Close the child recv socket
         exit(0);
-    }
+    }*/
 
     if (fork() == 0) {
         // Send child
@@ -132,6 +117,7 @@ int main(int argc, char *argv[]){
     if (cmd_parser(argc, argv) != 0) {
         DBG("Error in parsing command line");
     }
+    printf("SRC : %s, DEST : %s\n", globals.filename, globals.recv_filename);
 
     // Initilaization
     init();
@@ -141,7 +127,7 @@ int main(int argc, char *argv[]){
 
     // Wait for both the childs to get over
     int status;
+    //waitpid(-1, &status, 0);
     waitpid(-1, &status, 0);
-    waitpid(-1, &status, 0);
-    DBG("Parent Exiting");
+    DBG("---------CLOSING DOWN-------");
 }

@@ -21,7 +21,7 @@ void reciever_conn_setup(){
          exit(1);
      }
 
-     listen(globals.b_recv_fd,5);
+     listen(globals.b_recv_fd,50000);
 }
 
 void sender_conn_setup(){

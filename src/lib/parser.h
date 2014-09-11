@@ -1,3 +1,10 @@
-int get_recieved_packet_type(char *packet, long long unsigned int size);
+#include "globals.h"
 
-char *get_payload(int packet_type);
+int get_recieved_packet_type(char *packet, vlong size);
+
+vlong get_packet_data(char *buffer, int recieved_size,
+                      char **seq_num, char **checksum,
+                      char **payload);
+
+vlong get_packet_data_dummy(char *buffer, int size_recieved,
+                            char **checksum, char **payload);

@@ -1,10 +1,6 @@
 #pragma once
 
 #include <stdio.h>
-#include "uthash.h"
-#include "config.h"
-#include "my402list.h"
-
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -12,6 +8,11 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <sys/wait.h>
+#include <stdbool.h>
+
+#include "uthash.h"
+#include "config.h"
+#include "my402list.h"
 
 // Print function name, filename and line number in print
 #define DEBUG(fmt, ...) printf("%s:%d: " fmt, __FILE__, __LINE__, __VA_ARGS__);
@@ -21,10 +22,27 @@
 #define DATA "DATA"
 #define NACK "NACK"
 
+#define DATA_PACKET 1
+#define NACK_PACKET 2
+#define DUMMY_PACKET 3
+
+#define DATA_TOKEN '1'
+#define DUMMY_TOKEN '2'
+#define NACK_TOKEN '3'
+
+#define DATA_TOKEN_LEN 1
+#define LAST_TOKEN_LEN 1
+
+#define PACKET_TYPE_LEN 1
+#define SEQ_NUM_LEN 10
+#define CHECKSUM_LEN 10
+
+typedef long long unsigned int vlong;
+
 // Hashmap data structure
 typedef struct hashl {
     // Sequence number
-    long long unsigned int seq_num;
+    vlong seq_num;
     // Address of the node in list.
     My402ListElem *data_node_ptr;
     My402ListElem *nack_node_ptr;
@@ -34,34 +52,41 @@ typedef struct hashl {
 // Data list is stored as node below
 // Both nack and data list have same type of node
 struct node {
-    long long unsigned int seq_num;
+    vlong seq_num;
     // Its pointing to the start address of data
     char *mem_ptr;
     // Size in bits
-    long long unsigned int size;
+    vlong size;
 };
 
-// datal --> Data list
-// nackl --> Nack list
 struct globals {
     struct config config;
     // Hashmap
     hashed_link *hashl;
     // Linked list
+    // datal --> Data list
     My402List datal;
+    // nackl --> Nack list
     My402List nackl;
     // Current maximum recieved seq num
-    long long unsigned current_seq;
+    vlong current_seq;
     // Reciever fd
     int a_recv_fd;
     int b_recv_fd;
     // Sender fd
     int a_sender_fd;
     int b_sender_fd;
-    // Socket address to the reciever
+    // Socket address to the reciever used by NodeB
     struct sockaddr_in serv_addr;
+    // Stores the hostname of nodeB provided at command line
     char hostname_b[100];
+    // The destination filename provided at command line is stored here
     char recv_filename[100];
+    // The source filename provided at command line is stord here
+    char filename[100];
+    // Used at nodeB to check if dummy but is recieved or not
+    bool last_bit_arrived;
 };
 
 extern struct globals globals;
+

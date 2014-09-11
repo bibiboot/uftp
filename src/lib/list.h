@@ -1,5 +1,6 @@
 #include "globals.h"
-#include <string.h>
+
+bool is_nack_list_empty() ;
 
 void get_current_nack_list();
 
@@ -11,4 +12,5 @@ void create_recv_list(My402List *list, const char *list_type);
 
 void create_list(char *data_ptr, My402List *list, const char *list_type);
 
-void add_retransmission_node(long long unsigned int  *retrans_list, int num_retrans);
+void add_retransmission_node(vlong  *retrans_list, int num_retrans);
+

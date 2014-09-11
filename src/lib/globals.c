@@ -6,5 +6,7 @@ struct globals globals = {
     // This is null as per documentation of uthash
     .hashl = NULL,
     // Current sequence recieved is 0
-    .current_seq = 0
+    .current_seq = 0,
+    // Used by nodeB for detecting if dummy packet arrived or not
+    .last_bit_arrived = false
 };

@@ -1,4 +1,5 @@
 #include "packetize.h"
+
 /**
  * @brief Create a character buffer with
  *        certain format so that the packet can
@@ -10,15 +11,53 @@
 void create_nack_packet(){
 }
 
+
 /**
- * @brief Create a data packet with
- *        certain format.
+ * @brief | PACKET_HEADER | DATA |
+ *              21Byte   packet_size
+ *
+ *        | PACKET_TYPE | SEQ NUM | CHECKSUM |
+ *            1Byte        10Byte    10Byte
  *        Copy the data from the memory location
  *
  * @param
  * @return character array with format
  */
-void create_data_packet(){
+vlong create_data_packet(char *mem_ptr, vlong payload_size,
+                       vlong seq_num, char **buffer){
+
+    vlong header_len = PACKET_TYPE_LEN + SEQ_NUM_LEN + CHECKSUM_LEN;
+
+    *buffer = malloc(sizeof(char)*(header_len + payload_size));
+    char *curr_buffer = *buffer;
+    bzero(*buffer, header_len + payload_size);
+
+    memcpy(curr_buffer, "1", PACKET_TYPE_LEN);
+    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
+    //DBG("[%llu] PACKET_TYPE [%s] (%d)", seq_num, curr_buffer, PACKET_TYPE_LEN);
+    //DBG("[%llu]", seq_num);
+    curr_buffer += PACKET_TYPE_LEN;
+
+    char seq_num_st[SEQ_NUM_LEN];
+    snprintf(seq_num_st, SEQ_NUM_LEN, "%llu", seq_num);
+    memcpy(curr_buffer, seq_num_st, SEQ_NUM_LEN);
+    //DBG("[%llu] SEQ_NUM [%s] (%d)", seq_num, curr_buffer, SEQ_NUM_LEN);
+    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
+    curr_buffer += SEQ_NUM_LEN;
+
+    char checksum[10] = "XXXXXXXXXX";
+    memcpy(curr_buffer, checksum, CHECKSUM_LEN);
+    //DBG("[%llu] CHECKSUM [%s] (%d)", seq_num, curr_buffer, CHECKSUM_LEN);
+    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
+    curr_buffer += CHECKSUM_LEN;
+
+    memcpy(curr_buffer, mem_ptr, (size_t)payload_size);
+    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
+
+    vlong buffer_len = header_len + payload_size;;
+    //DBG("[%llu] PAYLOAD [%s], (%llu) TOTAL SIZE [%d]", seq_num, curr_buffer, payload_size, buffer_len);
+    DBG("[%llu]  (%llu) TOTAL SIZE [%llu]", seq_num, payload_size, buffer_len);
+    return buffer_len;
 }
 
 /**
@@ -27,5 +66,27 @@ void create_data_packet(){
  *        with infromation about the filenames
  *        It doesn't contain anything
  */
-void create_dummy_last_packet(){
+vlong create_dummy_packet(char **buffer){
+    vlong payload_size = sizeof(globals.recv_filename);
+    vlong header_len = PACKET_TYPE_LEN + CHECKSUM_LEN;
+    *buffer = malloc(sizeof(char)*(header_len + payload_size));
+    bzero(*buffer, header_len + payload_size);
+
+    char *curr_buffer = *buffer;
+
+    memcpy(curr_buffer, "2", PACKET_TYPE_LEN);
+    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
+    curr_buffer += PACKET_TYPE_LEN;
+
+    char checksum[10] = "XXXXXXXXXX";
+    memcpy(curr_buffer, checksum, CHECKSUM_LEN);
+    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
+    curr_buffer += CHECKSUM_LEN;
+
+    memcpy(curr_buffer, globals.recv_filename, (size_t)payload_size);
+    //DBG("COMPLETE : [%s] CURR BUFF: [%s]", *buffer, curr_buffer);
+    //
+    vlong buffer_len = header_len + payload_size;;
+    DBG("DUMMY : [%s] [%llu]", *buffer, buffer_len);
+    return buffer_len;
 }
