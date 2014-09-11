@@ -7,8 +7,8 @@ USC558L => Lab5 Implementing Custom FTP
 Entry to add in /etc/hosts
 =========================
 ```
-sen 127.0.0.1
-rev 127.0.0.1
+127.0.0.1 sen
+127.0.0.1 rev
 ```
 
 Alias to add in ~/.bashrc or ~/.profile (Shorcuts)
