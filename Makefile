@@ -5,6 +5,7 @@ _CFLAGS=-Wall -Wextra -Werror -Wshadow -Winline -D_GNU_SOURCE -std=c99 -g
 
 BIN_DIR=$(CURDIR)/bin
 SRC_DIR=$(CURDIR)/src
+DATA_DIR=$(CURDIR)/etc/data
 SCRIPT_DIR=$(CURDIR)/scripts
 NODE_A_DIR=$(SRC_DIR)/a
 NODE_B_DIR=$(SRC_DIR)/b
@@ -35,6 +36,8 @@ create:
 # Build
 build_a:
 	-mkdir -p $(BIN_DIR)
+	touch $(DATA_DIR)/recv.bin
+	rm $(DATA_DIR)/recv.bin
 	$(CC) -o $(BIN_DIR)/a $(_SOURCES_LIB) $(_SOURCES_A) $(INCLUDES_A)
 
 build_b:
@@ -44,4 +47,3 @@ build_b:
 clean:
 	@echo "Deleting bin folder"
 	rm -rf $(BIN_DIR)/*
-
