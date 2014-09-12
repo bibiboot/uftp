@@ -19,7 +19,7 @@ void* sender(void *v){
 
     // Send dummy data denotes the end of sending data
     send_dummy_packet();
-    DBG("[TIME] START SENDER %u", to_micro(globals.a_sender_start));
+    DBG("[SUMMARY] START SENDER %u", to_micro(globals.a_sender_start));
 }
 
 int send_packet(struct node *data_node, bool is_retransmitted){

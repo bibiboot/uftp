@@ -72,7 +72,7 @@ vlong create_data_packet(char *mem_ptr, vlong payload_size,
     memcpy(curr_buffer, mem_ptr, (size_t)payload_size);
 
     vlong buffer_len = header_len + payload_size;;
-    DBG("[DATA SEND] SEQ NUM: %llu, TOTAL SIZE [%llu]", seq_num, buffer_len);
+    //DBG("[DATA SEND] SEQ NUM: %llu, TOTAL SIZE [%llu]", seq_num, buffer_len);
     return buffer_len;
 }
 
@@ -100,6 +100,6 @@ vlong create_dummy_packet(char **buffer){
     memcpy(curr_buffer, globals.recv_filename, (size_t)payload_size);
 
     vlong buffer_len = header_len + payload_size;;
-    DBG("DUMMY : [%s] [%llu]", *buffer, buffer_len);
+    //DBG("DUMMY : [%s] [%llu]", *buffer, buffer_len);
     return buffer_len;
 }

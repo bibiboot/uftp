@@ -121,7 +121,7 @@ vlong get_packet_data_nack(char *buffer, int size_recieved,
 
     curr_buffer += CHECKSUM_LEN;
     memcpy(*payload, curr_buffer, payload_size);
-    DBG("[NACK RECV]: SEQ NUMBER: %s", *payload);
+    printf("[NACK RECV]: SEQ NUMBER: %s\n", *payload);
 
     return payload_size;
 }

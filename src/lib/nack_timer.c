@@ -7,7 +7,7 @@ void alarm_handler(int signal){
         return;
     }
 
-    DBG("[SIGNAL] NACK LEN = %d", globals.nackl.num_members);
+    //DBG("[SIGNAL] NACK LEN = %d", globals.nackl.num_members);
     if ((globals.nackl).num_members != 0) {
         // Read the nack list
         //print_list(&globals.datal);

@@ -7,8 +7,8 @@ void *reciever(void *v){
     struct sockaddr_in from;
     int fromlen = sizeof(struct sockaddr_in);
 
+    DBG("[START] START SENDER %u", to_micro(globals.a_sender_start));
     while (1){
-        DBG("[TIME] START SENDER %u", to_micro(globals.a_sender_start));
         int size_recieved=recvfrom(globals.a_recv_fd,
                                    buffer, globals.config.read_buffer_size, 0,
                        (struct sockaddr *)&from, &fromlen);
@@ -51,7 +51,7 @@ void nack_packet_handler(char *buffer, int size_recieved){
     struct node *data_node = (struct node*)((hash_node->data_node_ptr)->obj);
 
     // Retransmit the data back again with sequence number
-    DBG("[RETRANS SEND]: SEQ: %llu", seq_num);
+    printf("[RETRANS SEND]: SEQ: %llu", seq_num);
     int n = send_packet(data_node);
     if (n < 0) {
         perror("Retransmiston: Error in sending packet");

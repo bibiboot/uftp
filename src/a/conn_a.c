@@ -1,6 +1,13 @@
 #include "conn_a.h"
 #include "globals.h"
 
+void get(){
+    int optval;
+    int optlen;
+    getsockopt(globals.a_sender_fd, SOL_SOCKET, SO_RCVBUF, &optval, &optlen);
+    DBG("VALUE = %d", optval);
+}
+
 void reciever_conn_setup(){
      struct sockaddr_in serv_addr;
 
@@ -46,4 +53,7 @@ void sender_conn_setup(){
          server->h_length);
 
     globals.serv_addr.sin_port = htons(globals.config.b_recv_port);
+
+    get();
+    //exit(1);
 }
