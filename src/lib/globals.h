@@ -89,6 +89,7 @@ struct globals {
     char filename[100];
     // Used at nodeB to check if dummy but is recieved or not
     bool last_bit_arrived;
+    bool last_bit_send;
     struct timeval a_sender_start;
     struct timeval dummy_reached;
     struct timeval b_reciever_end;

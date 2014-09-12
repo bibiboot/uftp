@@ -22,6 +22,12 @@ int get_recieved_packet_type(char *packet, vlong size){
     }
 }
 
+void get_meta_info_checksum(char *checksum){
+    if (*checksum == '1') {
+        globals.last_bit_arrived = true;
+    }
+}
+
 /**
  * @brief Parse data packet
  *
@@ -50,6 +56,8 @@ vlong get_packet_data(char *buffer, int recieved_size,
 
     curr_buffer += SEQ_NUM_LEN;
     memcpy(*checksum, curr_buffer, CHECKSUM_LEN);
+
+    get_meta_info_checksum(*checksum);
 
     curr_buffer += CHECKSUM_LEN;
     memcpy(*payload, curr_buffer, payload_size);

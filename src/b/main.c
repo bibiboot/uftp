@@ -28,8 +28,8 @@ void init(){
 
     // 100MB
     //globals.config.total_size = 104857600;
-    // 50MB
-    globals.config.total_size = 52428800;
+    // 500MB
+    globals.config.total_size = 524288000;
 
     // Create data list
     create_recv_list(&globals.datal, DATA);
@@ -44,7 +44,6 @@ void init(){
 
 void start(){
     void *val;
-
 
     pthread_create(&globals.sen_th, 0, reciever, val);
     pthread_create(&globals.rev_th, 0, sender, val);

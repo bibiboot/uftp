@@ -9,6 +9,7 @@ struct globals globals = {
     .current_seq = 0,
     // Used by nodeB for detecting if dummy packet arrived or not
     .last_bit_arrived = false,
+    .last_bit_send = false,
     // Hostname of nodeA
     .hostname_a = "sen"
 };

@@ -44,7 +44,7 @@ vlong create_nack_packet(char **buffer, vlong seq_num){
  * @return character array with format
  */
 vlong create_data_packet(char *mem_ptr, vlong payload_size,
-                       vlong seq_num, char **buffer){
+                       vlong seq_num, char **buffer, bool is_retransmitted){
 
     vlong header_len = PACKET_TYPE_LEN + SEQ_NUM_LEN + CHECKSUM_LEN;
 
@@ -60,7 +60,12 @@ vlong create_data_packet(char *mem_ptr, vlong payload_size,
     memcpy(curr_buffer, seq_num_st, SEQ_NUM_LEN);
     curr_buffer += SEQ_NUM_LEN;
 
-    char checksum[10] = "XXXXXXXXXX";
+    char checksum[10];
+    if (is_retransmitted && globals.last_bit_send) {
+        strcpy(checksum, "1XXXXXXXXX");
+    } else {
+        strcpy(checksum, "0XXXXXXXXX");
+    }
     memcpy(curr_buffer, checksum, CHECKSUM_LEN);
     curr_buffer += CHECKSUM_LEN;
 

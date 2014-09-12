@@ -80,6 +80,7 @@ void data_packet_handler(char *buffer, int size_recieved) {
 
     char *seq_num, *checksum, *payload;
     vlong payload_size = get_packet_data(buffer, size_recieved, &seq_num, &checksum, &payload);
+    DBG("CHECKSUM : [%s]", checksum);
     vlong sq_num= atoll(seq_num);
 
     vlong seq_num_int = atoi(seq_num);
