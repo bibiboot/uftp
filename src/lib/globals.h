@@ -36,7 +36,7 @@
 #define LAST_TOKEN_LEN 1
 
 #define PACKET_TYPE_LEN 1
-#define SEQ_NUM_LEN 10
+#define SEQ_NUM_LEN 12
 #define CHECKSUM_LEN 10
 
 typedef long long unsigned int vlong;
