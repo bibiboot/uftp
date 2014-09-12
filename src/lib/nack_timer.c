@@ -6,12 +6,15 @@ void alarm_handler(int signal){
         exit(1);
         return;
     }
-    DBG("Got sigalrm, do_sleep() will end");
 
-    // Read the nack list
-    send_nack_packet();
+    DBG("[SIGNAL] NACK LEN = %d", globals.nackl.num_members);
+    if ((globals.nackl).num_members != 0) {
+        // Read the nack list
+        send_nack_packet();
 
-    register_signal();
+        // Register another alarm
+        register_signal();
+    }
 }
 
 void register_signal(){

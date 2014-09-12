@@ -24,18 +24,19 @@ unsigned int to_micro(struct timeval tv){
   return tv.tv_sec* 1000000 + tv.tv_usec;
 }
 
-
 int send_nack_packet(){
     struct sockaddr *to = (struct sockaddr *)&globals.serv_addr;
     int tolen = sizeof(struct sockaddr);
 
     // Iterate the nack list
     My402ListElem *elem=NULL;
+    DBG("XXXXXXXX CURR SEQ: %llu\n", globals.current_seq);
     for (elem=My402ListFirst(&globals.nackl);
          elem != NULL && ((struct node*)(elem->obj))->seq_num < globals.current_seq;
          elem=My402ListNext(&globals.nackl, elem)) {
         struct node *data_node = (elem->obj);
 
+        DBG("XXXXXXXX SEQ: %llu\n", data_node->seq_num);
         // Create nack packet
         char *buffer;
         vlong buffer_len = create_nack_packet(&buffer, data_node->seq_num);

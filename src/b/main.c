@@ -51,13 +51,12 @@ void start(){
         exit(0);
     }
 
-    /*
     if (fork() == 0) {
         // Send child
         sender();
         // Close the child send socket
         exit(0);
-    }*/
+    }
 }
 
 int main(int argc, char *argv[]){
@@ -71,6 +70,6 @@ int main(int argc, char *argv[]){
     // Wait for both the childs to get over
     int status;
     waitpid(-1, &status, 0);
-    //waitpid(-1, &status, 0);
+    waitpid(-1, &status, 0);
     DBG("-------------CLOSE DOWN----------");
 }
