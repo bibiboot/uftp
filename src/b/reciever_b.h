@@ -1,6 +1,6 @@
 #include "globals.h"
 
-void reciever();
+void *reciever(void *val);
 
 int recv_packet();
 

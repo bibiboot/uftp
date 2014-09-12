@@ -1,6 +1,6 @@
 #include "sender_a.h"
 
-void sender(){
+void* sender(void *v){
     // Iterate the data list and send data
     My402ListElem *elem=NULL;
 

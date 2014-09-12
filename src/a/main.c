@@ -40,21 +40,12 @@ int cmd_parser(int argc, char *argv[]){
 
 void start(){
     gettimeofday(&globals.a_sender_start, NULL);
-    if (fork() == 0) {
-        // Recv Child
-        reciever();
-        DBG("RECV Exiting");
-        // Close the child recv socket
-        exit(0);
-    }
+    void *val;
 
-    if (fork() == 0) {
-        // Send child
-        sender();
-        // Close the child send socket
-        DBG("SENDER Exiting");
-        exit(0);
-    }
+    //print_list(&globals.datal);
+
+    pthread_create(&globals.sen_th, 0, reciever, val);
+    pthread_create(&globals.rev_th, 0, sender, val);
 }
 
 int main(int argc, char *argv[]){
@@ -72,8 +63,7 @@ int main(int argc, char *argv[]){
     start();
 
     // Wait for both the childs to get over
-    int status;
-    waitpid(-1, &status, 0);
-    waitpid(-1, &status, 0);
+    pthread_join(globals.sen_th, NULL);
+    pthread_join(globals.rev_th, NULL);
     DBG("---------CLOSING DOWN-------");
 }

@@ -10,6 +10,7 @@ void alarm_handler(int signal){
     DBG("[SIGNAL] NACK LEN = %d", globals.nackl.num_members);
     if ((globals.nackl).num_members != 0) {
         // Read the nack list
+        //print_list(&globals.datal);
         send_nack_packet();
 
         // Register another alarm

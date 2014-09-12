@@ -1,14 +1,14 @@
 #include "reciever_b.h"
 
 bool is_nack_list_empty() {
-    DBG("NUM NACK LIST = %d", (globals.nackl).num_members);
+    //DBG("NUM NACK LIST = %d", (globals.nackl).num_members);
     if ((globals.nackl).num_members == 0) {
         return true;
     } else {
         // Print the list
-        DBG("---------");
+        //DBG("---------");
         //print_list(&globals.nackl);
-        DBG("---------");
+        //DBG("---------");
         // Send nack packet
         //send_nack_packet();
         return false;
@@ -19,7 +19,7 @@ bool is_last_packet_recieved() {
     return globals.last_bit_arrived;
 }
 
-void reciever(){
+void *reciever(void *val){
 
     while (1){
         // If last packet is recieved

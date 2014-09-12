@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 #include <stdbool.h>
 #include <sys/time.h>
+#include <pthread.h>
 
 #include "uthash.h"
 #include "config.h"
@@ -91,6 +92,7 @@ struct globals {
     struct timeval a_sender_start;
     struct timeval dummy_reached;
     struct timeval b_reciever_end;
+    pthread_t sen_th, rev_th;
 };
 
 extern struct globals globals;

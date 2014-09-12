@@ -1,6 +1,6 @@
 #include "sender_b.h"
 
-void sender(){
+void *sender(void *val){
     /*
     My402ListElem *elem=NULL;
     for (elem=My402ListFirst(&globals.datal); elem != NULL; elem=My402ListNext(&globals.datal, elem)) {

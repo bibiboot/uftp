@@ -18,7 +18,7 @@ void init(){
     // 1GB
     //globals.config.total_size = 1048576000;
     //1MB
-    globals.config.total_size = 1048576;
+    //globals.config.total_size = 1048576;
 
     // 200MB
     //globals.config.total_size = 209715200;
@@ -29,7 +29,7 @@ void init(){
     // 100MB
     //globals.config.total_size = 104857600;
     // 50MB
-    //globals.config.total_size = 52428800;
+    globals.config.total_size = 52428800;
 
     // Create data list
     create_recv_list(&globals.datal, DATA);
@@ -43,20 +43,11 @@ void init(){
 }
 
 void start(){
-    if (fork() == 0) {
-        // Recv Child
-        reciever();
-        DBG("RECV process exiting");
-        // Close the child recv socket
-        exit(0);
-    }
+    void *val;
 
-    if (fork() == 0) {
-        // Send child
-        sender();
-        // Close the child send socket
-        exit(0);
-    }
+
+    pthread_create(&globals.sen_th, 0, reciever, val);
+    pthread_create(&globals.rev_th, 0, sender, val);
 }
 
 int main(int argc, char *argv[]){
@@ -68,8 +59,7 @@ int main(int argc, char *argv[]){
     start();
 
     // Wait for both the childs to get over
-    int status;
-    waitpid(-1, &status, 0);
-    waitpid(-1, &status, 0);
+    pthread_join(globals.sen_th, NULL);
+    pthread_join(globals.rev_th, NULL);
     DBG("-------------CLOSE DOWN----------");
 }

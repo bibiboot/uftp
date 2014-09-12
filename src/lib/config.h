@@ -1,13 +1,13 @@
 #pragma once
 
 #define CONFIG_INIT { \
-    .packet_size = 1000, \
+    .packet_size = 1400, \
     .a_recv_port = 3005, \
     .b_recv_port = 2005, \
     .total_size = 0, \
     .queue_len = 10000000, \
-    .read_buffer_size = 1024,\
-    .nack_timer = 5, \
+    .read_buffer_size = 1500,\
+    .nack_timer = 1, \
     .rtt = 2, }
 
 struct config {

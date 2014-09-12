@@ -31,8 +31,14 @@ int send_nack_packet(){
     // Iterate the nack list
     My402ListElem *elem=NULL;
     DBG("XXXXXXXX CURR SEQ: %llu\n", globals.current_seq);
+    elem=My402ListFirst(&globals.nackl);
+    if (elem==NULL)
+        DBG("First element is NULL");
+    else{
+        DBG("HEAD SEQ = %llu and last bit arrived = %d", ((struct node*)(elem->obj))->seq_num, globals.last_bit_arrived);
+    }
     for (elem=My402ListFirst(&globals.nackl);
-         elem != NULL && ((struct node*)(elem->obj))->seq_num < globals.current_seq;
+         elem != NULL && ( ((struct node*)(elem->obj))->seq_num < globals.current_seq || globals.last_bit_arrived);
          elem=My402ListNext(&globals.nackl, elem)) {
         struct node *data_node = (elem->obj);
 

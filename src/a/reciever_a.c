@@ -1,6 +1,6 @@
 #include "reciever_a.h"
 
-void reciever(){
+void *reciever(void *v){
     char buffer[globals.config.read_buffer_size];
     bzero(buffer,globals.config.read_buffer_size);
 
