@@ -8,6 +8,7 @@ void reciever(){
     int fromlen = sizeof(struct sockaddr_in);
 
     while (1){
+        DBG("[TIME] START SENDER %u", to_micro(globals.a_sender_start));
         int size_recieved=recvfrom(globals.a_recv_fd,
                                    buffer, globals.config.read_buffer_size, 0,
                        (struct sockaddr *)&from, &fromlen);

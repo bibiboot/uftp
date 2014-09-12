@@ -3,6 +3,7 @@
 void sender(){
     // Iterate the data list and send data
     My402ListElem *elem=NULL;
+
     for (elem=My402ListFirst(&globals.datal); elem != NULL; elem=My402ListNext(&globals.datal, elem)) {
         struct node *data_node = (elem->obj);
         int n = send_packet(data_node);
@@ -14,6 +15,7 @@ void sender(){
 
     // Send dummy data denotes the end of sending data
     send_dummy_packet();
+    DBG("[TIME] START SENDER %u", to_micro(globals.a_sender_start));
 }
 
 int send_packet(struct node *data_node){

@@ -1,9 +1,5 @@
 #include "reciever_b.h"
 
-#define RECV_WINDOW 1500
-
-//char filename[100] = "etc/data/recv.bin";
-
 bool is_nack_list_empty() {
     DBG("NUM NACK LIST = %d", (globals.nackl).num_members);
     if ((globals.nackl).num_members == 0) {
@@ -14,11 +10,10 @@ bool is_nack_list_empty() {
         //print_list(&globals.nackl);
         DBG("---------");
         // Send nack packet
-        send_nack_packet();
+        //send_nack_packet();
         return false;
     }
 }
-
 
 bool is_last_packet_recieved() {
     return globals.last_bit_arrived;
@@ -43,6 +38,8 @@ void reciever(){
         int n=recv_packet();
     }
 COMPLETE_FILE_REACHED:
+    gettimeofday(&globals.b_reciever_end, NULL);
+    DBG("[TIME] END RECIEVER %u", to_micro(globals.b_reciever_end));
     DBG("Complete file is downloaded");
     write_data_list_to_file(globals.recv_filename);
 }
@@ -114,6 +111,13 @@ void data_packet_handler(char *buffer, int size_recieved) {
 }
 
 void dummy_packet_handler(char *buffer, int size_recieved) {
+
+    if (globals.last_bit_arrived) {
+        DBG("[DUPLICATE DUMMY]");
+        return;
+    }
+
+    gettimeofday(&globals.dummy_reached, NULL);
     // On the bit for last bit arrived
     globals.last_bit_arrived = true;
     DBG("[DUMMY RECV]: [%s]", buffer);

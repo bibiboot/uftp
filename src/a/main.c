@@ -39,6 +39,7 @@ int cmd_parser(int argc, char *argv[]){
 }
 
 void start(){
+    gettimeofday(&globals.a_sender_start, NULL);
     if (fork() == 0) {
         // Recv Child
         reciever();

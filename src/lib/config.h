@@ -7,6 +7,7 @@
     .total_size = 0, \
     .queue_len = 10000000, \
     .read_buffer_size = 1024,\
+    .nack_timer = 5, \
     .rtt = 2, }
 
 struct config {
@@ -23,6 +24,7 @@ struct config {
     // Queue length at the listen socket
     long long unsigned int queue_len;
     long long unsigned int read_buffer_size;;
+    int nack_timer;
 };
 
 

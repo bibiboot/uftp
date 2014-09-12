@@ -17,8 +17,8 @@ void init(){
     //globals.config.total_size = 1024;
     // 1GB
     //globals.config.total_size = 1048576000;
-    // 1MB
-    //globals.config.total_size = 1048576;
+    //1MB
+    globals.config.total_size = 1048576;
 
     // 200MB
     //globals.config.total_size = 209715200;
@@ -29,7 +29,7 @@ void init(){
     // 100MB
     //globals.config.total_size = 104857600;
     // 50MB
-    globals.config.total_size = 52428800;
+    //globals.config.total_size = 52428800;
 
     // Create data list
     create_recv_list(&globals.datal, DATA);

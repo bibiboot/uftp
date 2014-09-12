@@ -9,6 +9,7 @@
 #include <netdb.h>
 #include <sys/wait.h>
 #include <stdbool.h>
+#include <sys/time.h>
 
 #include "uthash.h"
 #include "config.h"
@@ -87,7 +88,13 @@ struct globals {
     char filename[100];
     // Used at nodeB to check if dummy but is recieved or not
     bool last_bit_arrived;
+    struct timeval a_sender_start;
+    struct timeval dummy_reached;
+    struct timeval b_reciever_end;
 };
 
 extern struct globals globals;
 
+unsigned int time_diff_micro(struct timeval end, struct timeval start);
+unsigned int to_micro(struct timeval tv);
+int send_nack_packet();

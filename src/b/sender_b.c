@@ -1,6 +1,7 @@
 #include "sender_b.h"
 
 void sender(){
+    /*
     My402ListElem *elem=NULL;
     for (elem=My402ListFirst(&globals.datal); elem != NULL; elem=My402ListNext(&globals.datal, elem)) {
         struct node *data_node = (elem->obj);
@@ -11,6 +12,8 @@ void sender(){
             exit(1);
         }
     }
+    */
+    register_signal();
 }
 
 int send_packet(struct node *data_node){
@@ -21,7 +24,8 @@ int send_packet(struct node *data_node){
     return n;
 }
 
-int send_nack_packet(struct node *data_node){
+/*
+int send_nack_packet(){
     struct sockaddr *to = (struct sockaddr *)&globals.serv_addr;
     int tolen = sizeof(struct sockaddr);
 
@@ -47,3 +51,4 @@ int send_nack_packet(struct node *data_node){
     }
     return 0;
 }
+*/

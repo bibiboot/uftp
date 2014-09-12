@@ -12,3 +12,42 @@ struct globals globals = {
     // Hostname of nodeA
     .hostname_a = "sen"
 };
+
+/**
+ * Calculates difference between two timeval.
+ */
+unsigned int time_diff_micro(struct timeval end, struct timeval start){
+  return ((end.tv_sec - start.tv_sec) * 1000000) + (end.tv_usec - start.tv_usec);
+}
+
+unsigned int to_micro(struct timeval tv){
+  return tv.tv_sec* 1000000 + tv.tv_usec;
+}
+
+
+int send_nack_packet(){
+    struct sockaddr *to = (struct sockaddr *)&globals.serv_addr;
+    int tolen = sizeof(struct sockaddr);
+
+    // Iterate the nack list
+    My402ListElem *elem=NULL;
+    for (elem=My402ListFirst(&globals.nackl);
+         elem != NULL && ((struct node*)(elem->obj))->seq_num < globals.current_seq;
+         elem=My402ListNext(&globals.nackl, elem)) {
+        struct node *data_node = (elem->obj);
+
+        // Create nack packet
+        char *buffer;
+        vlong buffer_len = create_nack_packet(&buffer, data_node->seq_num);
+        DBG("[NACK SEND] SEQ NUM: %llu", data_node->seq_num);
+
+        // Send nack packet
+        int n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+        free(buffer);
+        if (n < 0) {
+            perror("Error in sento");
+            exit(1);
+        }
+    }
+    return 0;
+}
