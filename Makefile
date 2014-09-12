@@ -16,11 +16,13 @@ INCLUDES_A=-I$(SRC_DIR) -I$(CURDIR) \
 	   -I$(CURDIR)/deps/uthash \
 	   -I$(NODE_A_DIR) \
 	   -I$(LIB_DIR) \
+	   -lpthread \
 
 INCLUDES_B=-I$(SRC_DIR) -I$(CURDIR) \
 	   -I$(CURDIR)/deps/uthash \
 	   -I$(NODE_B_DIR) \
 	   -I$(LIB_DIR) \
+	   -lpthread \
 
 # All .c files in src folder
 _SOURCES=$(shell find $(SRC_DIR) -type f -iname '*.[c]')
