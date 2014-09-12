@@ -11,7 +11,8 @@ struct globals globals = {
     .last_bit_arrived = false,
     .last_bit_send = false,
     // Hostname of nodeA
-    .hostname_a = "sen"
+    .hostname_a = "sen",
+    .total_retrans = 0
 };
 
 /**
@@ -29,7 +30,7 @@ int send_nack_packet(){
     struct sockaddr *to = (struct sockaddr *)&globals.serv_addr;
     int tolen = sizeof(struct sockaddr);
 
-    vlong total_len;
+    vlong total_len = 0;
     // Iterate the nack list
     My402ListElem *elem=NULL;
     //DBG("XXXXXXXX CURR SEQ: %llu\n", globals.current_seq);
@@ -37,7 +38,7 @@ int send_nack_packet(){
     if (elem==NULL)
         DBG("First element is NULL");
     else{
-        DBG("[SIGNAL] NACK HEAD = %llu and FILE SEND = %d", ((struct node*)(elem->obj))->seq_num, globals.last_bit_arrived);
+        printf("[SIGNAL] NACK HEAD = %llu, FILE SEND = %d\n", ((struct node*)(elem->obj))->seq_num, globals.last_bit_arrived);
     }
     for (elem=My402ListFirst(&globals.nackl);
          elem != NULL && ( ((struct node*)(elem->obj))->seq_num < globals.current_seq || globals.last_bit_arrived);

@@ -94,6 +94,7 @@ struct globals {
     struct timeval dummy_reached;
     struct timeval b_reciever_end;
     pthread_t sen_th, rev_th;
+    long long unsigned int total_retrans;
 };
 
 extern struct globals globals;
