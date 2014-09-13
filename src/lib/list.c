@@ -29,13 +29,13 @@ void create_list(char *data_ptr, My402List *list, const char *list_type){
 
     // Iterate and add nodes with seq_num and mem address
     vlong seq_num = 0;
-    for (;seq_num<globals.config.total_size; seq_num += globals.config.packet_size){
+    for (;seq_num<globals.total_size; seq_num += globals.config.packet_size){
         struct node *data_node = malloc(sizeof(struct node));
         data_node->seq_num = seq_num;
         data_node->mem_ptr = data_ptr + seq_num;
         // To handle scenario where the last packet is of size less then
         // required
-        vlong size = globals.config.total_size - seq_num > globals.config.packet_size ? globals.config.packet_size : globals.config.total_size - seq_num;
+        vlong size = globals.total_size - seq_num > globals.config.packet_size ? globals.config.packet_size : globals.total_size - seq_num;
         // size in bytes
         data_node->size = size;
 
@@ -148,7 +148,7 @@ void create_recv_list(My402List *list, const char *list_type){
 
     // Iterate and add nodes with seq_num and mem address
     vlong seq_num = 0;
-    for (;seq_num<globals.config.total_size; seq_num += globals.config.packet_size){
+    for (;seq_num<globals.total_size; seq_num += globals.config.packet_size){
         struct node *data_node = malloc(sizeof(struct node));
         data_node->seq_num = seq_num;
         data_node->mem_ptr = NULL;
@@ -199,7 +199,7 @@ void print_file_packet_wise(char *data_ptr){
     long long int seq_num = 0;
     char packet_data[globals.config.packet_size];
 
-    for (;seq_num < globals.config.total_size;){
+    for (;seq_num < globals.total_size;){
         strncpy(packet_data, data_ptr + seq_num, (size_t)globals.config.packet_size);
         memcpy(packet_data, data_ptr + seq_num, (size_t)globals.config.packet_size);
         seq_num += globals.config.packet_size;

@@ -10,36 +10,22 @@
 #include "reciever_b.h"
 
 void init(){
-
-    // Text file
-    //globals.config.total_size = 27;
-    // 100KB
-    //globals.config.total_size = 1024;
     // 1GB
     //globals.config.total_size = 1048576000;
-    //1MB
-    //globals.config.total_size = 1048576;
-
-    // 200MB
-    //globals.config.total_size = 209715200;
-
-    // 20MB
-    //globals.config.total_size = 20971520;
-
-    // 100MB
-    //globals.config.total_size = 104857600;
-    // 500MB
-    globals.config.total_size = 524288000;
-
-    // Create data list
-    create_recv_list(&globals.datal, DATA);
-    create_recv_list(&globals.nackl, NACK);
-
-    strcpy(globals.recv_filename, "etc/data/recv.bin");
-
     // Create socket connection
+    main_conn_setup();
     reciever_conn_setup();
     sender_conn_setup();
+}
+
+void init_config(){
+    void *v;
+    main_reciever(v);
+
+    // Create data list
+    DBG("SIZE = %llu", globals.total_size);
+    create_recv_list(&globals.datal, DATA);
+    create_recv_list(&globals.nackl, NACK);
 }
 
 void start(){
@@ -53,6 +39,9 @@ int main(int argc, char *argv[]){
 
     // Initilaization
     init();
+
+    // Send start dummy to get filename and size
+    init_config();
 
     // Fork and start sending
     start();

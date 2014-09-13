@@ -22,6 +22,7 @@ int get_recieved_packet_type(char *packet, vlong size){
     }
 }
 
+
 void get_meta_info_checksum(char *checksum){
     if (*checksum == '1') {
         globals.last_bit_arrived = true;
@@ -63,6 +64,19 @@ vlong get_packet_data(char *buffer, int recieved_size,
     memcpy(*payload, curr_buffer, payload_size);
 
     return payload_size;
+}
+
+
+vlong get_main_packet_data(char *buffer) {
+    char temp_buffer[1024];
+    bzero(temp_buffer, 1024);
+    strncpy(temp_buffer, buffer, CHECKSUM_LEN);
+    buffer += CHECKSUM_LEN;
+    char temp2_buffer[1024];
+    bzero(temp2_buffer, 1024);
+    strcpy(temp2_buffer, buffer);
+    strcpy(globals.recv_filename, temp2_buffer);
+    return atoll(temp_buffer);
 }
 
 /**

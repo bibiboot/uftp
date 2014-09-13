@@ -11,3 +11,5 @@ vlong get_packet_data_dummy(char *buffer, int size_recieved,
 
 vlong get_packet_data_nack(char *buffer, int size_recieved,
                            char **checksum, char **payload);
+
+vlong get_main_packet_data(char *buffer);

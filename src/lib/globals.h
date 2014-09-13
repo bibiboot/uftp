@@ -78,8 +78,11 @@ struct globals {
     // Sender fd
     int a_sender_fd;
     int b_sender_fd;
+    int a_main_sender_fd;
+    int b_main_recv_fd;
     // Socket address to the reciever used by NodeB
     struct sockaddr_in serv_addr;
+    struct sockaddr_in main_serv_addr;
     // Stores the hostname of nodeB provided at command line
     char hostname_b[100];
     char *hostname_a;
@@ -95,6 +98,7 @@ struct globals {
     struct timeval b_reciever_end;
     pthread_t sen_th, rev_th;
     long long unsigned int total_retrans;
+    long long unsigned int total_size;
 };
 
 extern struct globals globals;

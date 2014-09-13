@@ -1,22 +1,35 @@
 #include "reciever_b.h"
 
 bool is_nack_list_empty() {
-    //DBG("NUM NACK LIST = %d", (globals.nackl).num_members);
     if ((globals.nackl).num_members == 0) {
         return true;
     } else {
-        // Print the list
-        //DBG("---------");
-        //print_list(&globals.nackl);
-        //DBG("---------");
-        // Send nack packet
-        //send_nack_packet();
         return false;
     }
 }
 
 bool is_last_packet_recieved() {
     return globals.last_bit_arrived;
+}
+
+void *main_reciever(){
+    char buffer[100];
+    bzero(buffer,100);
+
+    struct sockaddr_in from;
+    int fromlen = sizeof(struct sockaddr_in);
+
+    int size_recieved=recvfrom(globals.b_main_recv_fd, buffer, 100, 0,
+                               (struct sockaddr *)&from, &fromlen);
+    if (size_recieved < 0) {
+        perror("Error in recv");
+        exit(1);
+    }
+    //DBG("RECV %s", buffer);
+    //char buffer[100] = "524288000etc/data/recv.bin";
+    globals.total_size = get_main_packet_data(buffer);
+    //DBG("FILE: [%s] and SIZE : %llu",globals.recv_filename,  globals.total_size);
+    close(globals.b_main_recv_fd);
 }
 
 void *reciever(void *val){
@@ -29,7 +42,6 @@ void *reciever(void *val){
             // Delete the nack timer
             // Break out of the loop
             // Return
-            // TODO: Delete the nack timer
             DBG("NACK is EMPTY");
             goto COMPLETE_FILE_REACHED;
         }

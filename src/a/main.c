@@ -12,13 +12,14 @@
 void init(){
 
     // Create memory map files
-    char *data_ptr = get_memory_map_ptr(globals.filename, &globals.config.total_size);
-    DBG("SIZE = %llu", globals.config.total_size);
+    char *data_ptr = get_memory_map_ptr(globals.filename, &globals.total_size);
+    DBG("SIZE = %llu", globals.total_size);
 
     // Create data list
     create_list(data_ptr, &globals.datal, DATA);
 
     // Create socket connection
+    main_conn_setup();
     reciever_conn_setup();
     sender_conn_setup();
 }
@@ -38,11 +39,14 @@ int cmd_parser(int argc, char *argv[]){
     return 0;
 }
 
+void init_config(){
+    void *v;
+    main_sender(v);
+}
+
 void start(){
     gettimeofday(&globals.a_sender_start, NULL);
     void *val;
-
-    //print_list(&globals.datal);
 
     pthread_create(&globals.sen_th, 0, reciever, val);
     pthread_create(&globals.rev_th, 0, sender, val);
@@ -58,6 +62,9 @@ int main(int argc, char *argv[]){
 
     // Initilaization
     init();
+
+    // Send start dummy to get filename and size
+    init_config();
 
     // Fork and start sending
     start();

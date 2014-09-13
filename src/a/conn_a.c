@@ -41,6 +41,30 @@ void reciever_conn_setup(){
      listen(globals.a_recv_fd, globals.config.queue_len);
 }
 
+void main_conn_setup(){
+    struct hostent *server;
+
+    if ((globals.a_main_sender_fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0){
+        perror("Error opening socket");
+        exit(1);
+    }
+
+    server = gethostbyname(globals.hostname_b);
+    if (server == NULL) {
+        fprintf(stderr,"ERROR, no such host\n");
+        exit(0);
+    }
+
+    bzero((char *) &globals.main_serv_addr, sizeof(globals.main_serv_addr));
+    globals.main_serv_addr.sin_family = AF_INET;
+
+    bcopy((char *)server->h_addr,
+         (char *)&(globals.main_serv_addr).sin_addr.s_addr,
+         server->h_length);
+
+    globals.main_serv_addr.sin_port = htons(globals.config.b_main_recv_port);
+}
+
 void sender_conn_setup(){
     struct hostent *server;
 
