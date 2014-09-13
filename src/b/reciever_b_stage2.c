@@ -7,7 +7,7 @@ void *reciever_stage2(void *v){
     struct sockaddr_in from;
     int fromlen = sizeof(struct sockaddr_in);
 
-    DBG("[START] START SENDER %u", to_micro(globals.a_sender_start));
+    DBG("[START] START SENDER %llu", to_micro(globals.a_sender_start));
     while (1){
         int size_recieved=recvfrom(globals.b_recv_fd,
                                    buffer, globals.config.read_buffer_size, 0,

@@ -34,7 +34,7 @@ void* sender_stage2(void *v){
 
     // Send dummy data denotes the end of sending data
     send_dummy_packet_stage2();
-    DBG("[SUMMARY] START SENDER %u, RETRANS %llu", to_micro(globals.a_sender_start), globals.total_retrans);
+    //DBG("[SUMMARY] START SENDER %u, RETRANS %llu", to_micro(globals.a_sender_start), globals.total_retrans);
 }
 
 int send_packet_stage2(struct node *data_node, bool is_retransmitted){

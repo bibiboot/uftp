@@ -21,6 +21,7 @@ void* main_sender_stage2(){
     for (; i <= DUMMY_FREQ; i++){
         n = sendto(globals.a_sender_fd, "4", 5, 0, to, tolen);
         if (n < 0) {
+            DBG("XXXXXXX");
             perror("Error on send");
             exit(1);
         }

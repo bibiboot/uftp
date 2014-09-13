@@ -49,7 +49,7 @@ void* sender(void *v){
 
     // Send dummy data denotes the end of sending data
     send_dummy_packet();
-    printf("[S1] [SUMMARY] START SENDER %u, RETRANS %llu", to_micro(globals.a_sender_start), globals.total_retrans);
+    DBG("[SUMMARY] NUM RETRANS %llu", globals.total_retrans);
 }
 
 int send_packet(struct node *data_node, bool is_retransmitted){

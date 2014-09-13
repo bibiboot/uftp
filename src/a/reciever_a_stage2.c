@@ -24,7 +24,7 @@ void *reciever_stage2(void *val){
             // Delete the nack timer
             // Break out of the loop
             // Return
-            DBG("[S2] NACK is EMPTY");
+            DBG("NACK LIST IS EMPTY");
             goto COMPLETE_FILE_REACHED;
         }
 
@@ -33,9 +33,9 @@ void *reciever_stage2(void *val){
     }
 COMPLETE_FILE_REACHED:
     gettimeofday(&globals.b_reciever_end, NULL);
-    DBG("[S2] [TIME] END RECIEVER %u", to_micro(globals.b_reciever_end));
-    DBG("[S2] Complete file is downloaded : %s", NEW_RECIEVE_FILENAME);
+    DBG("[STAGE-2] END TIME %llu microseconds (epoch)", to_micro(globals.b_reciever_end));
     write_data_list_to_file(NEW_RECIEVE_FILENAME);
+    DBG("COMPLETE FILE DOWNLOADED : %s", NEW_RECIEVE_FILENAME);
     pthread_cancel(globals.rev_th);
 }
 
@@ -116,7 +116,8 @@ void dummy_packet_handler_stage2(char *buffer, int size_recieved) {
     gettimeofday(&globals.dummy_reached, NULL);
     // On the bit for last bit arrived
     globals.last_bit_arrived = true;
-    DBG("[S2] [DUMMY RECV]: [%s]", buffer);
+    //DBG("[S2] [DUMMY RECV]: [%s]", buffer);
+    DBG("[DUMMY RECV]");
 
     // Get checksum and filename of the destination
     char *checksum, *payload;

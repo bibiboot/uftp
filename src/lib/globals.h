@@ -109,5 +109,6 @@ struct globals {
 extern struct globals globals;
 
 unsigned int time_diff_micro(struct timeval end, struct timeval start);
-unsigned int to_micro(struct timeval tv);
+//unsigned int to_micro(struct timeval tv);
+long long unsigned int to_micro(struct timeval tv);
 int send_nack_packet(int sockfd);

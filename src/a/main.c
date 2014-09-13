@@ -11,6 +11,17 @@
 #include "reciever_a.h"
 #include "reciever_a_stage2.h"
 
+void calculate_throughput(){
+    // Calculate the throughput
+    // Total time: (End time - Start time) / 1000000 seconds
+    // Throughput (Bps): (Size / Total time) Bytes / seconds
+    // Throughput(bps) : Throughput(Bytes) * 8globals.a_sender_start;
+    long long unsigned int time_diff = time_diff_micro(globals.b_reciever_end, globals.a_sender_start);
+    float time_diff_sec = time_diff;
+    float throughput = (globals.total_size / time_diff_sec) * 8;
+    DBG("THROUGHPUT = %.2f Mbps", throughput);
+}
+
 void init_stage2(){
     update_mem_ptr_data_link_to_null();
     create_recv_list(&globals.nackl, NACK);
@@ -27,7 +38,7 @@ void init(){
 
     // Create memory map files
     char *data_ptr = get_memory_map_ptr(globals.filename, &globals.total_size);
-    DBG("[S1] FILE SIZE = %llu", globals.total_size);
+    DBG("FILE SIZE = %llu Bytes", globals.total_size);
 
     // Create data list
     create_list(data_ptr, &globals.datal, DATA);
@@ -63,6 +74,7 @@ void init_config(){
 
 void start(){
     gettimeofday(&globals.a_sender_start, NULL);
+    DBG("[STAGE-1] START TIME %llu microseconds (epoch)", to_micro(globals.a_sender_start));
     void *val;
 
     pthread_create(&globals.sen_th, 0, reciever, val);
@@ -85,7 +97,7 @@ int main_stage2(){
     }*/
 
     strcpy(globals.recv_filename, NEW_RECIEVE_FILENAME);
-    DBG("[S2] FILENAME : %s", globals.recv_filename);
+    DBG("DEST FILENAME : %s", globals.recv_filename);
     //globals.total_size = 524288000;
     globals.last_bit_arrived = false;
     globals.current_seq = 0;
@@ -103,11 +115,13 @@ int main_stage2(){
 
 int main(int argc, char *argv[]){
 
+    DBG("FILE TRANSFER STARTS");
     // Command line parsing
     if (cmd_parser(argc, argv) != 0) {
         DBG("Error in parsing command line");
     }
-    printf("SRC : %s, DEST : %s\n", globals.filename, globals.recv_filename);
+    DBG("SRC : %s, DEST : %s", globals.filename, globals.recv_filename);
+    DBG("DEST HOSTNAME : %s", globals.hostname_b);
 
     // Initilaization
     init();
@@ -122,12 +136,16 @@ int main(int argc, char *argv[]){
     pthread_join(globals.sen_th, NULL);
     pthread_join(globals.rev_th, NULL);
 
-    DBG("-------------END OF STAGE 1----------");
-    DBG("-------------START OF STAGE 2----------");
+    DBG("STAGE-1 END");
+    DBG("STAGE-2 STARTS");
 
     init_stage2();
     main_stage2();
-    DBG("-------------END----------");
-    main_sender_stage2();
+    DBG("STAGE-2 ENDS");
 
+    calculate_throughput();
+
+    main_sender_stage2();
+    DBG("FILE TRANSFER COMPLETE");
+    return 0;
 }

@@ -51,7 +51,7 @@ void *reciever(void *val){
     }
 COMPLETE_FILE_REACHED:
     gettimeofday(&globals.b_reciever_end, NULL);
-    DBG("[TIME] END RECIEVER %u", to_micro(globals.b_reciever_end));
+    DBG("[TIME] END RECIEVER %llu", to_micro(globals.b_reciever_end));
     DBG("Complete file is downloaded");
     write_data_list_to_file(globals.recv_filename);
     // Cancel the other thread
