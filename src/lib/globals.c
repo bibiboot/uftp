@@ -59,6 +59,7 @@ int send_nack_packet(int sockfd){
         }
         total_len++;
     }
+    //printf("[S2] NACK PERCENTAGE LIST = %f.21", (total_len/globals.nackl.num_members)*100);
     printf("[SIGNAL] NACK LEN: %llu\n", total_len);
     return 0;
 }

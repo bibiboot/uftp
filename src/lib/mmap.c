@@ -34,6 +34,7 @@ char * get_memory_map_ptr(const char *filename, vlong *total_size){
  */
 void write_data_list_to_file(const char *filename){
     // Open the file for writing
+    DBG("FILENAME = %s", filename);
     FILE *fp = fopen(filename, "w");
     if (fp == NULL){
         DBG("Can not open file for writing");
