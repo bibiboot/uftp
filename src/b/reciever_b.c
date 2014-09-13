@@ -42,7 +42,7 @@ void *reciever(void *val){
             // Delete the nack timer
             // Break out of the loop
             // Return
-            DBG("[S1] NACK is EMPTY");
+            DBG("NACK is EMPTY");
             goto COMPLETE_FILE_REACHED;
         }
 
@@ -51,8 +51,8 @@ void *reciever(void *val){
     }
 COMPLETE_FILE_REACHED:
     gettimeofday(&globals.b_reciever_end, NULL);
-    DBG("[TIME] END RECIEVER %llu", to_micro(globals.b_reciever_end));
-    DBG("Complete file is downloaded");
+    DBG("[STAGE-1] END TIME %llu seconds (epoch)", to_micro(globals.b_reciever_end));
+    DBG("COMPLETE FILE DOWNLOADED %s", globals.recv_filename);
     write_data_list_to_file(globals.recv_filename);
     // Cancel the other thread
     pthread_cancel(globals.rev_th);

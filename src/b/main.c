@@ -25,27 +25,14 @@ void init_config(){
     main_reciever(v);
 
     // Create data list
-    DBG("[S1] FILE SIZE RECIEVED = %llu", globals.total_size);
+    DBG("FILE SIZE RECIEVED = %llu", globals.total_size);
     create_recv_list(&globals.datal, DATA);
     create_recv_list(&globals.nackl, NACK);
 }
 
 void init_config_stage2(){
-    void *v;
     //Sending dummy first
     main_sender_stage2();
-
-    // Create data list
-    /*
-    globals.total_size = 524288000;
-    strcpy(globals.filename, "etc/data/data.bin");
-    char *data_ptr = get_memory_map_ptr(globals.filename, &globals.total_size);
-    DBG("SIZE = %llu", globals.total_size);
-
-    // Create data list
-    create_list(data_ptr, &globals.datal, DATA);
-    DBG("List Created");
-    */
 }
 
 void start(){
@@ -63,7 +50,7 @@ void start_stage2(){
 }
 
 int main_stage2(){
-    //init();
+    gettimeofday(&globals.a_sender_start, NULL);
     init_config_stage2();
 
     start_stage2();
@@ -75,6 +62,7 @@ int main_stage2(){
 
 int main(int argc, char *argv[]){
 
+    DBG("WAITING FOR FILE");
     // Initilaization
     init();
 
@@ -85,13 +73,13 @@ int main(int argc, char *argv[]){
     start();
 
     // Wait for both the childs to get over
-    //pthread_join(globals.rev_th, NULL);
     pthread_join(globals.sen_th, NULL);
 
-    DBG("-------------END OF STAGE 1----------");
-    DBG("-------------START OF STAGE 2----------");
+    DBG("STAGE-1 ENDS");
+    DBG("STAGE 2 STARTS");
 
     main_stage2();
+    DBG("FILE TRANSFER COMPLETE");
 
     return 0;
 }

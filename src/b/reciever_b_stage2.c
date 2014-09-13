@@ -7,7 +7,7 @@ void *reciever_stage2(void *v){
     struct sockaddr_in from;
     int fromlen = sizeof(struct sockaddr_in);
 
-    DBG("[START] START SENDER %llu", to_micro(globals.a_sender_start));
+    DBG("[STAGE-2] START TIME %llu seconds (epoch)", to_micro(globals.a_sender_start));
     while (1){
         int size_recieved=recvfrom(globals.b_recv_fd,
                                    buffer, globals.config.read_buffer_size, 0,
@@ -29,6 +29,7 @@ void *reciever_stage2(void *v){
                 dummy_packet_handler_stage2(buffer, size_recieved);
                 break;
             case STAGE2_START_PACKET:
+                DBG("DUMMY PACKET REACHED: FILE DOWNLOADED");
                 return;
         }
     }
