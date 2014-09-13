@@ -23,8 +23,9 @@ unsigned int time_diff_micro(struct timeval end, struct timeval start){
 }
 
 long long unsigned int to_micro(struct timeval tv){
-  DBG("NOW : %ld seconds", tv.tv_sec);
-  return tv.tv_sec* 1000000 + tv.tv_usec;
+  //DBG("NOW : %ld seconds", tv.tv_sec);
+  //return tv.tv_sec* 1000000 + tv.tv_usec;
+  return tv.tv_sec;
 }
 
 int send_nack_packet(int sockfd){
@@ -64,3 +65,26 @@ int send_nack_packet(int sockfd){
     printf("[SIGNAL] NACK LEN: %llu\n", total_len);
     return 0;
 }
+
+void do_md5(char *filename){
+    unsigned char c[MD5_DIGEST_LENGTH];
+    int i;
+    FILE *inFile = fopen (filename, "rb");
+    MD5_CTX mdContext;
+    int bytes;
+    unsigned char data[1024];
+
+    if (inFile == NULL) {
+        printf ("%s can't be opened.\n", filename);
+        return;
+    }
+
+    MD5_Init (&mdContext);
+    while ((bytes = fread (data, 1, 1024, inFile)) != 0)
+        MD5_Update (&mdContext, data, bytes);
+    MD5_Final (c,&mdContext);
+    for(i = 0; i < MD5_DIGEST_LENGTH; i++) {DBG("%02x", c[i]); }
+    DBG(" %s\n", filename);
+    fclose (inFile);
+}
+

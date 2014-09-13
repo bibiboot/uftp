@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include <sys/time.h>
 #include <pthread.h>
+#include <openssl/md5.h>
 
 #include "uthash.h"
 #include "config.h"
@@ -112,3 +113,4 @@ unsigned int time_diff_micro(struct timeval end, struct timeval start);
 //unsigned int to_micro(struct timeval tv);
 long long unsigned int to_micro(struct timeval tv);
 int send_nack_packet(int sockfd);
+void do_md5(char *filename);

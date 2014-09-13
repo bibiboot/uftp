@@ -75,7 +75,7 @@ void init_config(){
 
 void start(){
     gettimeofday(&globals.a_sender_start, NULL);
-    DBG("[STAGE-1] START TIME %llu microseconds (epoch)", to_micro(globals.a_sender_start));
+    DBG("[STAGE-1] START TIME %llu seconds (epoch)", to_micro(globals.a_sender_start));
     void *val;
 
     pthread_create(&globals.sen_th, 0, reciever, val);
@@ -148,5 +148,10 @@ int main(int argc, char *argv[]){
 
     main_sender_stage2();
     DBG("FILE TRANSFER COMPLETE");
+
+    DBG("PERFORM MD5");
+    // MD5
+    do_md5(globals.filename);
+    do_md5(globals.recv_filename);
     return 0;
 }

@@ -33,7 +33,7 @@ void *reciever_stage2(void *val){
     }
 COMPLETE_FILE_REACHED:
     gettimeofday(&globals.b_reciever_end, NULL);
-    DBG("[STAGE-2] END TIME %llu microseconds (epoch)", to_micro(globals.b_reciever_end));
+    DBG("[STAGE-2] END TIME %llu seconds (epoch)", to_micro(globals.b_reciever_end));
     write_data_list_to_file(NEW_RECIEVE_FILENAME);
     DBG("COMPLETE FILE DOWNLOADED : %s", NEW_RECIEVE_FILENAME);
     pthread_cancel(globals.rev_th);
