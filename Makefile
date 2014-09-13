@@ -39,7 +39,9 @@ create:
 build_a:
 	-mkdir -p $(BIN_DIR)
 	touch $(DATA_DIR)/recv.bin
+	touch $(DATA_DIR)/new_recv.bin
 	rm $(DATA_DIR)/recv.bin
+	rm $(DATA_DIR)/new_recv.bin
 	$(CC) -o $(BIN_DIR)/a $(_SOURCES_LIB) $(_SOURCES_A) $(INCLUDES_A)
 
 build_b:
