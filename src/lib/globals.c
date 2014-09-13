@@ -35,10 +35,10 @@ int send_nack_packet(){
     My402ListElem *elem=NULL;
     //DBG("XXXXXXXX CURR SEQ: %llu\n", globals.current_seq);
     elem=My402ListFirst(&globals.nackl);
-    if (elem==NULL)
-        DBG("First element is NULL");
-    else{
-        printf("[SIGNAL] NACK HEAD = %llu, FILE SEND = %d\n", ((struct node*)(elem->obj))->seq_num, globals.last_bit_arrived);
+    if (elem==NULL) {
+        //DBG("First element is NULL");
+    } else{
+        //printf("[SIGNAL] NACK HEAD = %llu, FILE SEND = %d\n", ((struct node*)(elem->obj))->seq_num, globals.last_bit_arrived);
     }
     for (elem=My402ListFirst(&globals.nackl);
          elem != NULL && ( ((struct node*)(elem->obj))->seq_num < globals.current_seq || globals.last_bit_arrived);

@@ -52,7 +52,7 @@ void nack_packet_handler(char *buffer, int size_recieved){
 
     // Retransmit the data back again with sequence number
     globals.total_retrans++;
-    printf("[RETRANS SEND]: TOTAL %llu", globals.total_retrans);
+    //printf("[RETRANS SEND]: TOTAL %llu", globals.total_retrans);
     int n = send_packet(data_node);
     if (n < 0) {
         perror("Retransmiston: Error in sending packet");

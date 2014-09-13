@@ -1,11 +1,21 @@
 #include "conn_a.h"
 #include "globals.h"
 
-void get(){
-    int optval;
+void get_conf(){
+    int optval = 0;
     int optlen;
-    getsockopt(globals.a_sender_fd, SOL_SOCKET, SO_RCVBUF, &optval, &optlen);
-    DBG("VALUE = %d", optval);
+    getsockopt(globals.a_sender_fd, SOL_SOCKET, SO_SNDBUF, &optval, &optlen);
+    //DBG("SEND BUF = %d", optval);
+    optval = 0;
+    getsockopt(globals.a_recv_fd, SOL_SOCKET, SO_RCVBUF, &optval, &optlen);
+    ///DBG("RECV BUF = %d", optval);
+}
+
+void set_conf(){
+    int optval = 1;
+    setsockopt(globals.a_sender_fd, SOL_SOCKET, SO_SNDBUF, &optval, sizeof optval);
+    optval = 1;
+    setsockopt(globals.a_recv_fd, SOL_SOCKET, SO_RCVBUF, &optval, sizeof optval);
 }
 
 void reciever_conn_setup(){
@@ -54,6 +64,7 @@ void sender_conn_setup(){
 
     globals.serv_addr.sin_port = htons(globals.config.b_recv_port);
 
-    get();
-    //exit(1);
+    get_conf();
+    //set_conf();
+    get_conf();
 }
