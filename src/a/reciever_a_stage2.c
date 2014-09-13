@@ -1,11 +1,11 @@
 #include "reciever_a_stage2.h"
 
 bool is_nack_list_empty() {
-    DBG("%s",globals.nackl.num_members);
+    //DBG("%s",globals.nackl.num_members);
     if ((globals.nackl).num_members == 0) {
         return true;
     } else {
-        send_nack_packet();
+        //send_nack_packet();
         return false;
     }
 }
@@ -56,8 +56,8 @@ void *reciever_stage2(void *val){
 COMPLETE_FILE_REACHED:
     gettimeofday(&globals.b_reciever_end, NULL);
     DBG("[TIME] END RECIEVER %u", to_micro(globals.b_reciever_end));
-    DBG("Complete file is downloaded");
-    write_data_list_to_file(globals.recv_filename);
+    DBG("Complete file is downloaded : %s", NEW_RECIEVE_FILENAME);
+    write_data_list_to_file(NEW_RECIEVE_FILENAME);
 }
 
 int recv_packet_stage2(){
@@ -113,8 +113,8 @@ void data_packet_handler_stage2(char *buffer, int size_recieved) {
         globals.current_seq = seq_num_int;
     }
 
-    DBG("[DATA RECV] SIZE RECV: %d, SEQ: %s,  CURR MAX: %llu",
-        size_recieved, seq_num, globals.current_seq);
+    //DBG("[DATA RECV] SIZE RECV: %d, SEQ: %s,  CURR MAX: %llu",
+     //   size_recieved, seq_num, globals.current_seq);
 
     // Checksum matched and sequence number known
     // Update the memory pointer

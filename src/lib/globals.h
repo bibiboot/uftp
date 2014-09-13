@@ -17,6 +17,7 @@
 #include "my402list.h"
 
 // Print function name, filename and line number in print
+#define NEW_RECIEVE_FILENAME "etc/data/new_recv.bin"
 #define DEBUG(fmt, ...) printf("%s:%d: " fmt, __FILE__, __LINE__, __VA_ARGS__);
 #define DBG(...) do{fprintf(stderr, "%s (%s, line %d): ", __func__, __FILE__, __LINE__); \
                          fprintf(stderr, __VA_ARGS__);           \
@@ -105,4 +106,4 @@ extern struct globals globals;
 
 unsigned int time_diff_micro(struct timeval end, struct timeval start);
 unsigned int to_micro(struct timeval tv);
-int send_nack_packet();
+int send_nack_packet(int sockfd);

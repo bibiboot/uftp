@@ -7,8 +7,10 @@
 #include "packetize.h"
 #include "conn_a.h"
 #include "sender_a.h"
+#include "sender_a_stage2.h"
 #include "reciever_a.h"
 #include "reciever_a_stage2.h"
+
 
 void init_stage2(){
     create_recv_list(&globals.datal, DATA);
@@ -72,7 +74,7 @@ void start_stage2(){
     void *val;
 
     pthread_create(&globals.sen_th, 0, reciever_stage2, val);
-    //pthread_create(&globals.rev_th, 0, sender, val);
+    pthread_create(&globals.rev_th, 0, sender_stage2, val);
 }
 
 int main(int argc, char *argv[]){
@@ -82,6 +84,8 @@ int main(int argc, char *argv[]){
     }
 
     //strcpy(globals.recv_filename, "etc/data/recv.bin");
+    strcpy(globals.recv_filename, NEW_RECIEVE_FILENAME);
+    DBG("FILENAME : %s", globals.recv_filename);
     globals.total_size = 524288000;
     globals.last_bit_arrived = false;
     globals.current_seq = 0;
@@ -89,7 +93,9 @@ int main(int argc, char *argv[]){
     init_stage2();
     init_conn();
     start_stage2();
+
     pthread_join(globals.sen_th, NULL);
+    pthread_join(globals.rev_th, NULL);
 }
 
 /*

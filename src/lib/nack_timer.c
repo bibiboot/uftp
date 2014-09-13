@@ -11,7 +11,8 @@ void alarm_handler(int signal){
     if ((globals.nackl).num_members != 0) {
         // Read the nack list
         //print_list(&globals.datal);
-        send_nack_packet();
+        //send_nack_packet();
+        send_nack_packet(globals.a_sender_fd);
 
         // Register another alarm
         register_signal();

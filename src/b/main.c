@@ -7,8 +7,9 @@
 #include "packetize.h"
 #include "conn_b.h"
 #include "sender_b.h"
-#include "sender_b_stage2.h"
 #include "reciever_b.h"
+#include "sender_b_stage2.h"
+#include "reciever_b_stage2.h"
 
 void init(){
     // 1GB
@@ -54,7 +55,7 @@ void start(){
 void start_stage2(){
     void *val;
 
-    //pthread_create(&globals.sen_th, 0, reciever, val);
+    pthread_create(&globals.sen_th, 0, reciever_stage2, val);
     pthread_create(&globals.rev_th, 0, sender_stage2, val);
 }
 /*
@@ -81,6 +82,8 @@ int main(int argc, char *argv[]){
     init();
     init_config_stage2();
     start_stage2();
+
     pthread_join(globals.rev_th, NULL);
+    pthread_join(globals.sen_th, NULL);
     return 0;
 }

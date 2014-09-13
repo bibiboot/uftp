@@ -75,18 +75,18 @@ int send_dummy_packet_stage2(){
     vlong buffer_len = create_dummy_packet(&buffer);
 
     int n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
-    n = sendto(globals.a_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+    n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
     free(buffer);
     return n;
 }

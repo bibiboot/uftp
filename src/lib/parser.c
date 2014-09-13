@@ -17,11 +17,11 @@ int get_recieved_packet_type(char *packet, vlong size){
     } else if (*packet == DUMMY_TOKEN) {
         return DUMMY_PACKET;
     } else {
+        DBG("PACKET = %s", packet);
         DBG("This should never happen");
         exit(1);
     }
 }
-
 
 void get_meta_info_checksum(char *checksum){
     if (*checksum == '1') {

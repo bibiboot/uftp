@@ -26,14 +26,13 @@ unsigned int to_micro(struct timeval tv){
   return tv.tv_sec* 1000000 + tv.tv_usec;
 }
 
-int send_nack_packet(){
+int send_nack_packet(int sockfd){
     struct sockaddr *to = (struct sockaddr *)&globals.serv_addr;
     int tolen = sizeof(struct sockaddr);
 
     vlong total_len = 0;
     // Iterate the nack list
     My402ListElem *elem=NULL;
-    //DBG("XXXXXXXX CURR SEQ: %llu\n", globals.current_seq);
     elem=My402ListFirst(&globals.nackl);
     if (elem==NULL) {
         //DBG("First element is NULL");
@@ -45,14 +44,15 @@ int send_nack_packet(){
          elem=My402ListNext(&globals.nackl, elem)) {
         struct node *data_node = (elem->obj);
 
-        //DBG("XXXXXXXX SEQ: %llu\n", data_node->seq_num);
         // Create nack packet
         char *buffer;
         vlong buffer_len = create_nack_packet(&buffer, data_node->seq_num);
         //DBG("[NACK SEND] SEQ NUM: %llu", data_node->seq_num);
 
         // Send nack packet
-        int n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+        //int n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
+        DBG("uefehfe");
+        int n = sendto(sockfd, buffer, buffer_len, 0, to, tolen);
         free(buffer);
         if (n < 0) {
             perror("Error in sento");
