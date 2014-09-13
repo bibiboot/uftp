@@ -23,6 +23,7 @@ unsigned int time_diff_micro(struct timeval end, struct timeval start){
 }
 
 long long unsigned int to_micro(struct timeval tv){
+  DBG("NOW : %ld seconds", tv.tv_sec);
   return tv.tv_sec* 1000000 + tv.tv_usec;
 }
 

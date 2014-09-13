@@ -17,8 +17,9 @@ void calculate_throughput(){
     // Throughput (Bps): (Size / Total time) Bytes / seconds
     // Throughput(bps) : Throughput(Bytes) * 8globals.a_sender_start;
     long long unsigned int time_diff = time_diff_micro(globals.b_reciever_end, globals.a_sender_start);
+    DBG("DFF in micro %llu", time_diff);
     float time_diff_sec = time_diff;
-    float throughput = (globals.total_size / time_diff_sec) * 8;
+    float throughput = ((globals.total_size*2) / time_diff_sec) * 8;
     DBG("THROUGHPUT = %.2f Mbps", throughput);
 }
 
