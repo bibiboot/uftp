@@ -42,7 +42,7 @@ void *reciever(void *val){
             // Delete the nack timer
             // Break out of the loop
             // Return
-            DBG("NACK is EMPTY");
+            DBG("[S1] NACK is EMPTY");
             goto COMPLETE_FILE_REACHED;
         }
 
@@ -54,8 +54,8 @@ COMPLETE_FILE_REACHED:
     DBG("[TIME] END RECIEVER %u", to_micro(globals.b_reciever_end));
     DBG("Complete file is downloaded");
     write_data_list_to_file(globals.recv_filename);
-    DBG("XXXX");
-    pthread_exit(0);
+    // Cancel the other thread
+    pthread_cancel(globals.rev_th);
 }
 
 int recv_packet(){
@@ -128,14 +128,14 @@ void data_packet_handler(char *buffer, int size_recieved) {
 void dummy_packet_handler(char *buffer, int size_recieved) {
 
     if (globals.last_bit_arrived) {
-        DBG("[DUPLICATE DUMMY]");
+        //DBG("[DUPLICATE DUMMY]");
         return;
     }
 
     gettimeofday(&globals.dummy_reached, NULL);
     // On the bit for last bit arrived
     globals.last_bit_arrived = true;
-    DBG("[DUMMY RECV]: [%s]", buffer);
+    DBG("[S1] [DUMMY RECV]: [%s]", buffer);
 
     // Get checksum and filename of the destination
     char *checksum, *payload;

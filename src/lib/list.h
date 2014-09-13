@@ -14,3 +14,4 @@ void create_list(char *data_ptr, My402List *list, const char *list_type);
 
 void add_retransmission_node(vlong  *retrans_list, int num_retrans);
 
+void update_mem_ptr_data_link_to_null();

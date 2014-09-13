@@ -14,28 +14,6 @@ bool is_last_packet_recieved() {
     return globals.last_bit_arrived;
 }
 
-/*
-void *main_reciever(){
-    char buffer[100];
-    bzero(buffer,100);
-
-    struct sockaddr_in from;
-    int fromlen = sizeof(struct sockaddr_in);
-
-    int size_recieved=recvfrom(globals.b_main_recv_fd, buffer, 100, 0,
-                               (struct sockaddr *)&from, &fromlen);
-    if (size_recieved < 0) {
-        perror("Error in recv");
-        exit(1);
-    }
-    //DBG("RECV %s", buffer);
-    //char buffer[100] = "524288000etc/data/recv.bin";
-    globals.total_size = get_main_packet_data(buffer);
-    //DBG("FILE: [%s] and SIZE : %llu",globals.recv_filename,  globals.total_size);
-    close(globals.b_main_recv_fd);
-}
-*/
-
 void *reciever_stage2(void *val){
 
     while (1){
@@ -46,7 +24,7 @@ void *reciever_stage2(void *val){
             // Delete the nack timer
             // Break out of the loop
             // Return
-            DBG("NACK is EMPTY");
+            DBG("[S2] NACK is EMPTY");
             goto COMPLETE_FILE_REACHED;
         }
 
@@ -55,9 +33,10 @@ void *reciever_stage2(void *val){
     }
 COMPLETE_FILE_REACHED:
     gettimeofday(&globals.b_reciever_end, NULL);
-    DBG("[TIME] END RECIEVER %u", to_micro(globals.b_reciever_end));
-    DBG("Complete file is downloaded : %s", NEW_RECIEVE_FILENAME);
+    DBG("[S2] [TIME] END RECIEVER %u", to_micro(globals.b_reciever_end));
+    DBG("[S2] Complete file is downloaded : %s", NEW_RECIEVE_FILENAME);
     write_data_list_to_file(NEW_RECIEVE_FILENAME);
+    pthread_cancel(globals.rev_th);
 }
 
 int recv_packet_stage2(){
@@ -130,14 +109,14 @@ void data_packet_handler_stage2(char *buffer, int size_recieved) {
 void dummy_packet_handler_stage2(char *buffer, int size_recieved) {
 
     if (globals.last_bit_arrived) {
-        DBG("[DUPLICATE DUMMY]");
+        //DBG("[DUPLICATE DUMMY]");
         return;
     }
 
     gettimeofday(&globals.dummy_reached, NULL);
     // On the bit for last bit arrived
     globals.last_bit_arrived = true;
-    DBG("[DUMMY RECV]: [%s]", buffer);
+    DBG("[S2] [DUMMY RECV]: [%s]", buffer);
 
     // Get checksum and filename of the destination
     char *checksum, *payload;

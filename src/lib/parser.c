@@ -16,8 +16,10 @@ int get_recieved_packet_type(char *packet, vlong size){
         return NACK_PACKET;
     } else if (*packet == DUMMY_TOKEN) {
         return DUMMY_PACKET;
-    } else {
-        DBG("PACKET = %s", packet);
+    } else if (*packet == STAGE2_START_TOKEN) {
+        return STAGE2_START_PACKET;
+    }
+    else {
         DBG("This should never happen");
         exit(1);
     }
@@ -65,7 +67,6 @@ vlong get_packet_data(char *buffer, int recieved_size,
 
     return payload_size;
 }
-
 
 vlong get_main_packet_data(char *buffer) {
     char temp_buffer[1024];

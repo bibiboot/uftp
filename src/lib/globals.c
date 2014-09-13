@@ -51,7 +51,6 @@ int send_nack_packet(int sockfd){
 
         // Send nack packet
         //int n = sendto(globals.b_sender_fd, buffer, buffer_len, 0, to, tolen);
-        DBG("uefehfe");
         int n = sendto(sockfd, buffer, buffer_len, 0, to, tolen);
         free(buffer);
         if (n < 0) {

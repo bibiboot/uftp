@@ -134,6 +134,17 @@ void update_mem_ptr_data_link(char *buffer, vlong seq_num,
     ((struct node*)((hash_node->data_node_ptr)->obj))->size = size;
 }
 
+void update_mem_ptr_data_link_to_null(){
+    My402ListElem *elem=NULL;
+    for (elem=My402ListFirst(&globals.datal); elem != NULL;
+         elem=My402ListNext(&globals.datal, elem)) {
+
+        struct node *data_node = (elem->obj);
+        data_node->mem_ptr = NULL;
+    }
+}
+
+
 /**
  * @brief Create list
  *        recv_data_list

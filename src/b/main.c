@@ -25,16 +25,18 @@ void init_config(){
     main_reciever(v);
 
     // Create data list
-    DBG("SIZE = %llu", globals.total_size);
+    DBG("[S1] FILE SIZE RECIEVED = %llu", globals.total_size);
     create_recv_list(&globals.datal, DATA);
     create_recv_list(&globals.nackl, NACK);
 }
 
 void init_config_stage2(){
     void *v;
-    //main_reciever(v);
+    //Sending dummy first
+    main_sender_stage2();
 
     // Create data list
+    /*
     globals.total_size = 524288000;
     strcpy(globals.filename, "etc/data/data.bin");
     char *data_ptr = get_memory_map_ptr(globals.filename, &globals.total_size);
@@ -43,6 +45,7 @@ void init_config_stage2(){
     // Create data list
     create_list(data_ptr, &globals.datal, DATA);
     DBG("List Created");
+    */
 }
 
 void start(){
@@ -58,7 +61,18 @@ void start_stage2(){
     pthread_create(&globals.sen_th, 0, reciever_stage2, val);
     pthread_create(&globals.rev_th, 0, sender_stage2, val);
 }
-/*
+
+int main_stage2(){
+    //init();
+    init_config_stage2();
+
+    start_stage2();
+
+    pthread_join(globals.rev_th, NULL);
+    pthread_join(globals.sen_th, NULL);
+    return 0;
+}
+
 int main(int argc, char *argv[]){
 
     // Initilaization
@@ -71,19 +85,13 @@ int main(int argc, char *argv[]){
     start();
 
     // Wait for both the childs to get over
-    pthread_join(globals.rev_th, NULL);
+    //pthread_join(globals.rev_th, NULL);
     pthread_join(globals.sen_th, NULL);
-    DBG("-------------CLOSE DOWN----------");
-    return 0;
-}
-*/
 
-int main(int argc, char *argv[]){
-    init();
-    init_config_stage2();
-    start_stage2();
+    DBG("-------------END OF STAGE 1----------");
+    DBG("-------------START OF STAGE 2----------");
 
-    pthread_join(globals.rev_th, NULL);
-    pthread_join(globals.sen_th, NULL);
+    main_stage2();
+
     return 0;
 }

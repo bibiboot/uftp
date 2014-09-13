@@ -11,9 +11,8 @@
 #include "reciever_a.h"
 #include "reciever_a_stage2.h"
 
-
 void init_stage2(){
-    create_recv_list(&globals.datal, DATA);
+    update_mem_ptr_data_link_to_null();
     create_recv_list(&globals.nackl, NACK);
 }
 
@@ -28,7 +27,7 @@ void init(){
 
     // Create memory map files
     char *data_ptr = get_memory_map_ptr(globals.filename, &globals.total_size);
-    DBG("SIZE = %llu", globals.total_size);
+    DBG("[S1] FILE SIZE = %llu", globals.total_size);
 
     // Create data list
     create_list(data_ptr, &globals.datal, DATA);
@@ -77,28 +76,31 @@ void start_stage2(){
     pthread_create(&globals.rev_th, 0, sender_stage2, val);
 }
 
-int main(int argc, char *argv[]){
+// Stage2
+int main_stage2(){
 
+    /*
     if (cmd_parser(argc, argv) != 0) {
         DBG("Error in parsing command line");
-    }
+    }*/
 
-    //strcpy(globals.recv_filename, "etc/data/recv.bin");
     strcpy(globals.recv_filename, NEW_RECIEVE_FILENAME);
-    DBG("FILENAME : %s", globals.recv_filename);
-    globals.total_size = 524288000;
+    DBG("[S2] FILENAME : %s", globals.recv_filename);
+    //globals.total_size = 524288000;
     globals.last_bit_arrived = false;
     globals.current_seq = 0;
 
-    init_stage2();
-    init_conn();
+    //Create nack list
+    //TODO Replace the init_stage2 later
+
+
+    //init_conn();
     start_stage2();
 
     pthread_join(globals.sen_th, NULL);
-    pthread_join(globals.rev_th, NULL);
+    return 0;
 }
 
-/*
 int main(int argc, char *argv[]){
 
     // Command line parsing
@@ -119,6 +121,13 @@ int main(int argc, char *argv[]){
     // Wait for both the childs to get over
     pthread_join(globals.sen_th, NULL);
     pthread_join(globals.rev_th, NULL);
-    DBG("---------CLOSING DOWN-------");
+
+    DBG("-------------END OF STAGE 1----------");
+    DBG("-------------START OF STAGE 2----------");
+
+    init_stage2();
+    main_stage2();
+    DBG("-------------END----------");
+    main_sender_stage2();
+
 }
-*/

@@ -28,6 +28,8 @@ void *reciever_stage2(void *v){
             case DUMMY_PACKET:
                 dummy_packet_handler_stage2(buffer, size_recieved);
                 break;
+            case STAGE2_START_PACKET:
+                return;
         }
     }
 }

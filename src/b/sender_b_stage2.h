@@ -1,5 +1,7 @@
 #include "globals.h"
 
+void* main_sender_stage2();
+
 void *sender_stage2(void *v);
 
 int send_dummy_packet_stage2();

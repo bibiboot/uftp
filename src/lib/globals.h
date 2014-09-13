@@ -28,10 +28,12 @@
 #define DATA_PACKET 1
 #define NACK_PACKET 2
 #define DUMMY_PACKET 3
+#define STAGE2_START_PACKET 4
 
 #define DATA_TOKEN '1'
 #define DUMMY_TOKEN '2'
 #define NACK_TOKEN '3'
+#define STAGE2_START_TOKEN '4'
 
 #define DATA_TOKEN_LEN 1
 #define LAST_TOKEN_LEN 1
@@ -39,6 +41,8 @@
 #define PACKET_TYPE_LEN 1
 #define SEQ_NUM_LEN 12
 #define CHECKSUM_LEN 10
+
+#define DUMMY_FREQ 50
 
 typedef long long unsigned int vlong;
 
