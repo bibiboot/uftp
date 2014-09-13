@@ -14,6 +14,7 @@ void *sender(void *val){
     }
     */
     register_signal();
+    pthread_exit(0);
 }
 
 int send_packet(struct node *data_node){

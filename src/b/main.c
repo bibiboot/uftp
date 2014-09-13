@@ -7,6 +7,7 @@
 #include "packetize.h"
 #include "conn_b.h"
 #include "sender_b.h"
+#include "sender_b_stage2.h"
 #include "reciever_b.h"
 
 void init(){
@@ -28,6 +29,21 @@ void init_config(){
     create_recv_list(&globals.nackl, NACK);
 }
 
+void init_config_stage2(){
+    void *v;
+    //main_reciever(v);
+
+    // Create data list
+    globals.total_size = 524288000;
+    strcpy(globals.filename, "etc/data/data.bin");
+    char *data_ptr = get_memory_map_ptr(globals.filename, &globals.total_size);
+    DBG("SIZE = %llu", globals.total_size);
+
+    // Create data list
+    create_list(data_ptr, &globals.datal, DATA);
+    DBG("List Created");
+}
+
 void start(){
     void *val;
 
@@ -35,6 +51,13 @@ void start(){
     pthread_create(&globals.rev_th, 0, sender, val);
 }
 
+void start_stage2(){
+    void *val;
+
+    //pthread_create(&globals.sen_th, 0, reciever, val);
+    pthread_create(&globals.rev_th, 0, sender_stage2, val);
+}
+/*
 int main(int argc, char *argv[]){
 
     // Initilaization
@@ -47,7 +70,17 @@ int main(int argc, char *argv[]){
     start();
 
     // Wait for both the childs to get over
-    pthread_join(globals.sen_th, NULL);
     pthread_join(globals.rev_th, NULL);
+    pthread_join(globals.sen_th, NULL);
     DBG("-------------CLOSE DOWN----------");
+    return 0;
+}
+*/
+
+int main(int argc, char *argv[]){
+    init();
+    init_config_stage2();
+    start_stage2();
+    pthread_join(globals.rev_th, NULL);
+    return 0;
 }

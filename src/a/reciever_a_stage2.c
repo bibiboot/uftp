@@ -1,9 +1,11 @@
-#include "reciever_b.h"
+#include "reciever_a_stage2.h"
 
 bool is_nack_list_empty() {
+    DBG("%s",globals.nackl.num_members);
     if ((globals.nackl).num_members == 0) {
         return true;
     } else {
+        send_nack_packet();
         return false;
     }
 }
@@ -12,6 +14,7 @@ bool is_last_packet_recieved() {
     return globals.last_bit_arrived;
 }
 
+/*
 void *main_reciever(){
     char buffer[100];
     bzero(buffer,100);
@@ -31,8 +34,9 @@ void *main_reciever(){
     //DBG("FILE: [%s] and SIZE : %llu",globals.recv_filename,  globals.total_size);
     close(globals.b_main_recv_fd);
 }
+*/
 
-void *reciever(void *val){
+void *reciever_stage2(void *val){
 
     while (1){
         // If last packet is recieved
@@ -47,25 +51,23 @@ void *reciever(void *val){
         }
 
         //DBG(".........Waiting.......");
-        int n=recv_packet();
+        int n=recv_packet_stage2();
     }
 COMPLETE_FILE_REACHED:
     gettimeofday(&globals.b_reciever_end, NULL);
     DBG("[TIME] END RECIEVER %u", to_micro(globals.b_reciever_end));
     DBG("Complete file is downloaded");
     write_data_list_to_file(globals.recv_filename);
-    DBG("XXXX");
-    pthread_exit(0);
 }
 
-int recv_packet(){
+int recv_packet_stage2(){
     char buffer[globals.config.read_buffer_size];
     bzero(buffer,globals.config.read_buffer_size);
 
     struct sockaddr_in from;
     int fromlen = sizeof(struct sockaddr_in);
 
-    int size_recieved=recvfrom(globals.b_recv_fd, buffer, globals.config.read_buffer_size, 0,
+    int size_recieved=recvfrom(globals.a_recv_fd, buffer, globals.config.read_buffer_size, 0,
                                (struct sockaddr *)&from, &fromlen);
     if (size_recieved < 0) {
         perror("Error in recv");
@@ -78,19 +80,19 @@ int recv_packet(){
 
     switch (packet_type) {
         case DATA_PACKET:
-            data_packet_handler(buffer, size_recieved);
+            data_packet_handler_stage2(buffer, size_recieved);
             break;
         case NACK_PACKET:
             //nack_packet_handler(size_recieved);
             break;
         case DUMMY_PACKET:
-            dummy_packet_handler(buffer, size_recieved);
+            dummy_packet_handler_stage2(buffer, size_recieved);
             break;
     }
     return size_recieved;
 }
 
-void data_packet_handler(char *buffer, int size_recieved) {
+void data_packet_handler_stage2(char *buffer, int size_recieved) {
 
     char *seq_num, *checksum, *payload;
     vlong payload_size = get_packet_data(buffer, size_recieved, &seq_num, &checksum, &payload);
@@ -111,8 +113,8 @@ void data_packet_handler(char *buffer, int size_recieved) {
         globals.current_seq = seq_num_int;
     }
 
-    //DBG("[DATA RECV] SIZE RECV: %d, SEQ: %s,  CURR MAX: %llu",
-     //   size_recieved, seq_num, globals.current_seq);
+    DBG("[DATA RECV] SIZE RECV: %d, SEQ: %s,  CURR MAX: %llu",
+        size_recieved, seq_num, globals.current_seq);
 
     // Checksum matched and sequence number known
     // Update the memory pointer
@@ -125,7 +127,7 @@ void data_packet_handler(char *buffer, int size_recieved) {
     free(checksum);
 }
 
-void dummy_packet_handler(char *buffer, int size_recieved) {
+void dummy_packet_handler_stage2(char *buffer, int size_recieved) {
 
     if (globals.last_bit_arrived) {
         DBG("[DUPLICATE DUMMY]");

@@ -8,6 +8,19 @@
 #include "conn_a.h"
 #include "sender_a.h"
 #include "reciever_a.h"
+#include "reciever_a_stage2.h"
+
+void init_stage2(){
+    create_recv_list(&globals.datal, DATA);
+    create_recv_list(&globals.nackl, NACK);
+}
+
+void init_conn(){
+    // Create socket connection
+    main_conn_setup();
+    reciever_conn_setup();
+    sender_conn_setup();
+}
 
 void init(){
 
@@ -19,9 +32,12 @@ void init(){
     create_list(data_ptr, &globals.datal, DATA);
 
     // Create socket connection
+    init_conn();
+    /*
     main_conn_setup();
     reciever_conn_setup();
     sender_conn_setup();
+    */
 }
 
 int cmd_parser(int argc, char *argv[]){
@@ -52,6 +68,31 @@ void start(){
     pthread_create(&globals.rev_th, 0, sender, val);
 }
 
+void start_stage2(){
+    void *val;
+
+    pthread_create(&globals.sen_th, 0, reciever_stage2, val);
+    //pthread_create(&globals.rev_th, 0, sender, val);
+}
+
+int main(int argc, char *argv[]){
+
+    if (cmd_parser(argc, argv) != 0) {
+        DBG("Error in parsing command line");
+    }
+
+    //strcpy(globals.recv_filename, "etc/data/recv.bin");
+    globals.total_size = 524288000;
+    globals.last_bit_arrived = false;
+    globals.current_seq = 0;
+
+    init_stage2();
+    init_conn();
+    start_stage2();
+    pthread_join(globals.sen_th, NULL);
+}
+
+/*
 int main(int argc, char *argv[]){
 
     // Command line parsing
@@ -74,3 +115,4 @@ int main(int argc, char *argv[]){
     pthread_join(globals.rev_th, NULL);
     DBG("---------CLOSING DOWN-------");
 }
+*/
