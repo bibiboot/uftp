@@ -4,17 +4,9 @@ uftp
 USC558L => Lab5 Implementing Custom FTP
 
 
-Entry to add in /etc/hosts
-=========================
-```
-127.0.0.1 sen
-127.0.0.1 rev
-```
-
 Alias to add in ~/.bashrc or ~/.profile (Shorcuts)
 =================================================
 ```
-alias synd='scp -r /home/dan/Work/uftp sc558ce@users.deterlab.net:/proj/USC558L/exp/drehman/work'
 alias a='make build_a'
 alias b='make build_b'
 alias ra='./bin/a etc/data/data.bin rev:etc/data/recv.bin'
