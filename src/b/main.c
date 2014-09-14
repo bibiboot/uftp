@@ -81,10 +81,7 @@ int main(int argc, char *argv[]){
     main_stage2();
 
     gettimeofday(&globals.b_reciever_end, NULL);
-    DBG("[STAGE-1] END TIME %llu seconds (epoch)", to_micro(globals.b_reciever_end));
-    DBG("COMPLETE FILE DOWNLOADED %s", globals.recv_filename);
-    write_data_list_to_file(globals.recv_filename);
-
+    DBG("[STAGE-2] ENDS %llu seconds (epoch)", to_micro(globals.b_reciever_end));
     DBG("FILE TRANSFER COMPLETE");
 
     return 0;
