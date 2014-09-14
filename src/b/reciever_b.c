@@ -1,4 +1,6 @@
 #include "reciever_b.h"
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 bool is_nack_list_empty() {
     if ((globals.nackl).num_members == 0) {
@@ -25,6 +27,14 @@ void *main_reciever(){
         perror("Error in recv");
         exit(1);
     }
+
+    //DBG("From %s:%d\n", inet_ntoa(from.sin_addr),ntohs(from.sin_port));
+    strcpy(globals.hostname_a, inet_ntoa(from.sin_addr));
+
+    // As we have the new hostname
+    // Make connectin
+    sender_conn_setup();
+
     //DBG("RECV %s", buffer);
     //char buffer[100] = "524288000etc/data/recv.bin";
     globals.total_size = get_main_packet_data(buffer);

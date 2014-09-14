@@ -43,7 +43,7 @@
 #define SEQ_NUM_LEN 12
 #define CHECKSUM_LEN 10
 
-#define DUMMY_FREQ 50
+#define DUMMY_FREQ 1000
 
 typedef long long unsigned int vlong;
 
@@ -91,7 +91,8 @@ struct globals {
     struct sockaddr_in main_serv_addr;
     // Stores the hostname of nodeB provided at command line
     char hostname_b[100];
-    char *hostname_a;
+    //char *hostname_a;
+    char hostname_a[100];
     // The destination filename provided at command line is stored here
     char recv_filename[100];
     // The source filename provided at command line is stord here

@@ -8,8 +8,7 @@
     .b_main_recv_port = 5005, \
     .queue_len = 10000000, \
     .read_buffer_size = 1500,\
-    .nack_timer = 1, \
-    .rtt = 2, }
+    .nack_timer = 1,}
 
 struct config {
     // Port to recieve data at NodeA
@@ -18,8 +17,6 @@ struct config {
     uint16_t b_main_recv_port;
     // Port to recieve data at NodeB
     uint16_t b_recv_port;
-    // RTT of the toplogy
-    uint16_t rtt;
     // Packet size to be send
     long long unsigned int packet_size;
     // Queue length at the listen socket

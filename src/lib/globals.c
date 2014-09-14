@@ -11,7 +11,6 @@ struct globals globals = {
     .last_bit_arrived = false,
     .last_bit_send = false,
     // Hostname of nodeA
-    .hostname_a = "sen",
     .total_retrans = 0
 };
 
@@ -23,8 +22,6 @@ unsigned int time_diff_micro(struct timeval end, struct timeval start){
 }
 
 long long unsigned int to_micro(struct timeval tv){
-  //DBG("NOW : %ld seconds", tv.tv_sec);
-  //return tv.tv_sec* 1000000 + tv.tv_usec;
   return tv.tv_sec;
 }
 
@@ -87,4 +84,3 @@ void do_md5(char *filename){
     DBG(" %s\n", filename);
     fclose (inFile);
 }
-

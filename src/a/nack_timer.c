@@ -6,6 +6,12 @@ void alarm_handler(int signal){
         exit(1);
         return;
     }
+
+    // If the current seq is greater then zero,
+    // It means that the hostname_a_new has been initialized and
+    // Its safe to proceed forward.
+
+
     if ((globals.nackl).num_members != 0) {
         // Read the nack list
         send_nack_packet(globals.a_sender_fd);

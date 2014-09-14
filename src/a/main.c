@@ -18,8 +18,7 @@ void calculate_throughput(){
     // Throughput(bps) : Throughput(Bytes) * 8globals.a_sender_start;
     long long unsigned int time_diff = time_diff_micro(globals.b_reciever_end, globals.a_sender_start);
     DBG("DFF in micro %llu", time_diff);
-    float time_diff_sec = time_diff;
-    float throughput = ((globals.total_size*2) / time_diff_sec) * 8;
+    float throughput = ((globals.total_size*2) / time_diff) * 8;
     DBG("THROUGHPUT = %.2f Mbps", throughput);
 }
 
@@ -37,6 +36,7 @@ void init_conn(){
 
 void init(){
 
+    gettimeofday(&globals.a_sender_start, NULL);
     // Create memory map files
     char *data_ptr = get_memory_map_ptr(globals.filename, &globals.total_size);
     DBG("FILE SIZE = %llu Bytes", globals.total_size);
@@ -74,7 +74,6 @@ void init_config(){
 }
 
 void start(){
-    gettimeofday(&globals.a_sender_start, NULL);
     DBG("[STAGE-1] START TIME %llu seconds (epoch)", to_micro(globals.a_sender_start));
     void *val;
 
@@ -115,6 +114,7 @@ int main_stage2(){
 }
 
 int main(int argc, char *argv[]){
+
 
     DBG("FILE TRANSFER STARTS");
     // Command line parsing

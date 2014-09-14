@@ -17,7 +17,7 @@ void init(){
     // Create socket connection
     main_conn_setup();
     reciever_conn_setup();
-    sender_conn_setup();
+    //sender_conn_setup();
 }
 
 void init_config(){

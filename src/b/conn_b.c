@@ -75,6 +75,7 @@ void sender_conn_setup(){
 
     server = gethostbyname(globals.hostname_a);
     if (server == NULL) {
+        DBG("B sender");
         fprintf(stderr,"ERROR, no such host\n");
         exit(0);
     }
