@@ -60,10 +60,12 @@ void *reciever(void *val){
         int n=recv_packet();
     }
 COMPLETE_FILE_REACHED:
+    /*
     gettimeofday(&globals.b_reciever_end, NULL);
     DBG("[STAGE-1] END TIME %llu seconds (epoch)", to_micro(globals.b_reciever_end));
     DBG("COMPLETE FILE DOWNLOADED %s", globals.recv_filename);
     write_data_list_to_file(globals.recv_filename);
+    */
     // Cancel the other thread
     pthread_cancel(globals.rev_th);
 }
