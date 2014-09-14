@@ -19,6 +19,7 @@ void* sender_stage2(void *v){
     // Iterate the data list and send data
     My402ListElem *elem=NULL;
     bool is_retransmitted = false;
+    FILE *fp = fopen(globals.recv_filename, "w");
 
     for (elem=My402ListFirst(&globals.datal); elem != NULL; elem=My402ListNext(&globals.datal, elem)) {
         struct node *data_node = (elem->obj);
@@ -27,7 +28,9 @@ void* sender_stage2(void *v){
             perror("Error on send");
             exit(1);
         }
+        write_packet_to_file(fp, data_node);
     }
+    fclose(fp);
 
     // The nodeA knows that last bit is send
     globals.last_bit_send =true;
