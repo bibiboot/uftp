@@ -41,6 +41,7 @@ create:
 
 # Build
 build_a:
+	rm -rf $(BIN_DIR)/*
 	-mkdir -p $(BIN_DIR)
 	touch $(DATA_DIR)/recv.bin
 	touch $(DATA_DIR)/new_recv.bin
